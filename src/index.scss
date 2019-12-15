@@ -1,0 +1,21 @@
+:root {
+  --body-bg-color: #fff;
+  --border-color: #ebebeb;
+  --secondary-color: #828282;
+  --danger-color: #fd397a;
+}
+
+.text {
+  &_danger {
+    color: var(--danger-color) !important;
+  }
+  &_secondary {
+    color: var(--secondary-color) !important;
+  }
+}
+
+.DropdownMenu {
+  &__divider {
+    margin: 4px 0;
+  }
+}
