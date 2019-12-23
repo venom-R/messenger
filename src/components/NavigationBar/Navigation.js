@@ -6,6 +6,7 @@ import Logo from './Logo';
 
 import './Navigation.scss';
 import avatar from './temp-avatar.png';
+import Avatar from '../Avatar';
 
 const userMenu = (
   <Menu>
@@ -101,7 +102,7 @@ const Navigation = () => {
           <Tooltip placement="right" title="User menu">
             <Dropdown overlay={userMenu} placement="topLeft" trigger="click">
               <Button type="primary" shape="circle" className="Navigation__settings-btn">
-                <img src={avatar} alt="Profile avatar" className="Navigation__avatar" />
+                <Avatar src={avatar} alt="Profile avatar" />
               </Button>
             </Dropdown>
           </Tooltip>

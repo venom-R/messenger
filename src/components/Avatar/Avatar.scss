@@ -1,0 +1,23 @@
+.Avatar {
+  display: inline-block;
+  overflow: hidden;
+
+  &_sm {
+    height: 36px;
+    width: 36px;
+  }
+
+  &_lg {
+    height: 98px;
+    width: 98px;
+  }
+
+  &_round {
+    border-radius: 50%;
+  }
+
+  &__img {
+    max-width: 100%;
+    height: auto;
+  }
+}
