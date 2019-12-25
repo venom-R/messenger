@@ -1,0 +1,9 @@
+.ChatItem {
+  &_unread {
+    .ListGroupItem {
+      &__title {
+        color: var(--accent-color);
+      }
+    }
+  }
+}

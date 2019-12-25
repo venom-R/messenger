@@ -1,0 +1,37 @@
+.styled-scroll {
+  &::-webkit-scrollbar-button {
+    width: 5px;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.15);
+    transition: color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &::-webkit-resizer {
+    width: 4px;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &::selection {
+    background-color: #cce2ff;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}

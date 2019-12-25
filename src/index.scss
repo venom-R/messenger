@@ -1,8 +1,17 @@
+@import './helpers';
+@import './styled-scroll';
+
 :root {
   --body-bg-color: #fff;
   --border-color: #ebebeb;
+  --primary-color: #212529;
   --secondary-color: #828282;
   --danger-color: #fd397a;
+  --accent-color: #0a80ff;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .text {
@@ -11,6 +20,9 @@
   }
   &_secondary {
     color: var(--secondary-color) !important;
+  }
+  &_accent {
+    color: var(--accent-color) !important;
   }
 }
 

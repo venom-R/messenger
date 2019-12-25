@@ -19,7 +19,6 @@ const userMenu = (
     <Menu.Item>
       <a href="http://www.tmall.com/">Settings</a>
     </Menu.Item>
-    <Divider className="DropdownMenu__divider" />
     <Menu.Item>
       <a href="http://www.tmall.com/" className="text_danger">
         Logout
@@ -100,7 +99,7 @@ const Navigation = () => {
 
         <li className="Navigation__group-item">
           <Tooltip placement="right" title="User menu">
-            <Dropdown overlay={userMenu} placement="topLeft" trigger="click">
+            <Dropdown overlay={userMenu} placement="topLeft" trigger={['click']}>
               <Button type="primary" shape="circle" className="Navigation__settings-btn">
                 <Avatar src={avatar} alt="Profile avatar" />
               </Button>

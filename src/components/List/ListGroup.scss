@@ -1,0 +1,57 @@
+.ListGroup {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &__item {
+    padding: 15px 30px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--border-color);
+    }
+  }
+}
+
+.ListGroupItem {
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__avatar {
+    padding-top: 5px;
+    margin-right: 15px;
+    flex: 0 0 auto;
+  }
+
+  &__body {
+    flex: 1 0;
+    min-width: 0;
+  }
+
+  &__actions {
+    flex: 0 0;
+  }
+
+  &__title,
+  &__content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: var(--primary-color);
+  }
+
+  &__content {
+    color: var(--secondary-color);
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
