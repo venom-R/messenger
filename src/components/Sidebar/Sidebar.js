@@ -1,21 +1,17 @@
 import React from 'react';
 
-import { Layout, Row, Col, Button, Tooltip, Input } from 'antd';
+import { Button, Tooltip, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 import './Sidebar.scss';
 import ChatList from '../ChatsList';
 
-const { Header, Content } = Layout;
-
 const SidebarHeader = props => {
   return (
-    <Header className="Sidebar__header">
-      <Row type="flex" align="middle" justify="space-between" className="Sidebar__row">
-        <Col span={8}>
-          <h2 className="Sidebar__title">Chats</h2>
-        </Col>
-        <Col span={8} className="text-right">
+    <header className="Sidebar__header">
+      <div className="Sidebar__heading-row">
+        <h2 className="Sidebar__title">Chats</h2>
+        <div>
           <Tooltip placement="bottom" title="New group">
             <Button className="mr-2">
               <Icon icon={['fas', 'user-friends']} />
@@ -27,23 +23,23 @@ const SidebarHeader = props => {
               <Icon icon={['fas', 'plus-circle']} />
             </Button>
           </Tooltip>
-        </Col>
-      </Row>
-      <Row>
+        </div>
+      </div>
+      <form className="Sidebar__form">
         <Input size="large" placeholder="Search chats" />
-      </Row>
-    </Header>
+      </form>
+    </header>
   );
 };
 
 const Sidebar = props => {
   return (
-    <Layout className="Sidebar">
+    <aside className="Sidebar">
       <SidebarHeader />
-      <Content className="Sidebar__content styled-scroll">
+      <div className="Sidebar__content styled-scroll">
         <ChatList />
-      </Content>
-    </Layout>
+      </div>
+    </aside>
   );
 };
 
