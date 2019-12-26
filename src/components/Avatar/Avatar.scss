@@ -20,4 +20,15 @@
     max-width: 100%;
     height: auto;
   }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: inherit;
+    width: inherit;
+    text-transform: uppercase;
+    font: 600 17px / 1 'Open Sans', sans-serif;
+    color: var(--white-color);
+  }
 }
