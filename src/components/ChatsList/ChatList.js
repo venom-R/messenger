@@ -2,8 +2,10 @@ import React from 'react';
 import { ListGroup, ListGroupItem } from '../List';
 import Avatar from '../Avatar';
 import classNames from 'classnames';
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 import './ChatItem.scss';
+import { Button, Dropdown, Menu } from 'antd';
 
 const chatsData = [
   {
@@ -20,7 +22,7 @@ const chatsData = [
     title: 'Townsend Seary',
     body: "What's up, how are you?",
     time: '03:41',
-    unreadCounter: null,
+    unreadCounter: 0,
   },
   {
     id: 3,
@@ -28,7 +30,7 @@ const chatsData = [
     title: 'Mirabelle Tow',
     body: 'Where are you?',
     time: '09:23',
-    unreadCounter: null,
+    unreadCounter: 0,
   },
 ];
 
@@ -42,11 +44,32 @@ const ChatList = props => {
   );
 };
 
+const chatItemMenu = (
+  <Menu>
+    <Menu.Item>
+      <a href="http://www.alipay.com/">Open</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a href="http://www.taobao.com/">Profile</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a href="http://www.tmall.com/">Add to archive</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a href="http://www.tmall.com/" className="text_danger">
+        Delete
+      </a>
+    </Menu.Item>
+  </Menu>
+);
+
 const ChatItem = ({ data }) => {
   const { avatar, title, body, time, unreadCounter } = data;
+  const isUnread = unreadCounter > 0;
   const chatItemClassName = classNames({
     ChatItem: true,
-    ChatItem_unread: !!unreadCounter,
+    ChatItem_unread: isUnread,
+    ListGroupItem_active: false,
   });
   return (
     <ListGroupItem className={chatItemClassName}>
@@ -58,7 +81,15 @@ const ChatItem = ({ data }) => {
         <div className="ListGroupItem__content ChatItem__content">{body}</div>
       </div>
       <div className="ListGroupItem__actions">
+        {isUnread && <div className="ChatItem__unread-counter">{unreadCounter}</div>}
         <small className="ChatItem__time">{time}</small>
+        {!isUnread && (
+          <Dropdown overlay={chatItemMenu} placement="bottomRight" trigger={['click']}>
+            <Button type="link" className="ListGroupItem__dropdown">
+              <Icon icon={['fas', 'ellipsis-h']} />
+            </Button>
+          </Dropdown>
+        )}
       </div>
     </ListGroupItem>
   );

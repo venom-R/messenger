@@ -1,9 +1,22 @@
 .ChatItem {
   &_unread {
-    .ListGroupItem {
-      &__title {
+    .ChatItem {
+      &__title,
+      &__time {
         color: var(--accent-color);
       }
     }
+  }
+
+  &__unread-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 23px;
+    width: 23px;
+    font-size: 13px;
+    color: var(--white-color);
+    background: var(--primary-bg-color);
+    border-radius: 50%;
   }
 }

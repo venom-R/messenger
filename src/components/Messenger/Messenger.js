@@ -15,10 +15,10 @@ const Messenger = () => {
         <NavigationBar />
         <Content>
           <Row>
-            <Col span={8}>
+            <Col span={6}>
               <Sidebar />
             </Col>
-            <Col span={16}>col-12</Col>
+            <Col span={18}>col-18</Col>
           </Row>
         </Content>
       </Layout>

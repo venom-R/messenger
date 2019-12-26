@@ -6,8 +6,11 @@
   --border-color: #ebebeb;
   --primary-color: #212529;
   --secondary-color: #828282;
+  --secondary--bg-color: #ebebeb;
   --danger-color: #fd397a;
   --accent-color: #0a80ff;
+  --primary-bg-color: var(--accent-color);
+  --white-color: #fff;
 }
 
 body {
