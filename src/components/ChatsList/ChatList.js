@@ -11,7 +11,7 @@ const chatsData = [
   {
     id: 1,
     avatar: 'http://slek.laborasyon.com/demos/dark/dist/media/img/women_avatar1.jpg',
-    title: 'Margaretta Worvell',
+    fullName: 'Margaretta Worvell',
     body: 'I need you today',
     time: '11:05',
     unreadCounter: 3,
@@ -19,7 +19,7 @@ const chatsData = [
   {
     id: 2,
     avatar: 'http://slek.laborasyon.com/demos/dark/dist/media/img/man_avatar1.jpg',
-    title: 'Townsend Seary',
+    fullName: 'Townsend Seary',
     body: "What's up, how are you?",
     time: '03:41',
     unreadCounter: 0,
@@ -27,7 +27,7 @@ const chatsData = [
   {
     id: 3,
     avatar: 'http://slek.laborasyon.com/demos/dark/dist/media/img/women_avatar5.jpg',
-    title: 'Mirabelle Tow',
+    fullName: 'Mirabelle Tow',
     body: 'Where are you?',
     time: '09:23',
     unreadCounter: 0,
@@ -64,7 +64,7 @@ const chatItemMenu = (
 );
 
 const ChatItem = ({ data }) => {
-  const { avatar, title, body, time, unreadCounter } = data;
+  const { avatar, fullName, body, time, unreadCounter } = data;
   const isUnread = unreadCounter > 0;
   const chatItemClassName = classNames({
     ChatItem: true,
@@ -74,10 +74,10 @@ const ChatItem = ({ data }) => {
   return (
     <ListGroupItem className={chatItemClassName}>
       <div className="ListGroupItem__avatar">
-        <Avatar src={avatar} alt={title} />
+        <Avatar src={avatar} alt={fullName} />
       </div>
       <div className="ListGroupItem__body">
-        <h5 className="ListGroupItem__title ChatItem__title">{title}</h5>
+        <h5 className="ListGroupItem__title ChatItem__title">{fullName}</h5>
         <div className="ListGroupItem__content ChatItem__content">{body}</div>
       </div>
       <div className="ListGroupItem__actions">

@@ -1,0 +1,40 @@
+.Chat {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color);
+}
+
+.ChatHeader {
+  display: flex;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--border-color);
+  padding: 17px 30px;
+}
+
+.ChatBody {
+  flex: 1 0;
+}
+
+.ChatFooter {
+  flex: 0 0 auto;
+  border-top: 1px solid var(--border-color);
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+
+  &__caption {
+    margin-left: 15px;
+  }
+
+  &__fullname {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0;
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 
 import NavigationBar from '../NavigationBar';
 import Sidebar from '../Sidebar';
+import Chat from '../Chat';
 
 import './Messenger.scss';
 
@@ -11,7 +12,7 @@ const Messenger = () => {
       <NavigationBar />
       <div className="content">
         <Sidebar />
-        <h2>Chat</h2>
+        <Chat />
       </div>
     </div>
   );
