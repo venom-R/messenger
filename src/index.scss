@@ -34,3 +34,9 @@ body {
   justify-content: stretch;
   flex: 1 0 auto;
 }
+
+.btn {
+  &_secondary {
+    background: var(--secondary--bg-color);
+  }
+}

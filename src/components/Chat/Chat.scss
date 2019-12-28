@@ -21,6 +21,11 @@
 .ChatFooter {
   flex: 0 0 auto;
   border-top: 1px solid var(--border-color);
+  padding: 17px 30px 50px 30px;
+
+  &__row {
+    display: flex;
+  }
 }
 
 .user-card {
