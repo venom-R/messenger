@@ -16,6 +16,7 @@
 
 .ChatBody {
   flex: 1 0;
+  display: flex;
 }
 
 .ChatFooter {
@@ -25,21 +26,5 @@
 
   &__row {
     display: flex;
-  }
-}
-
-.user-card {
-  display: flex;
-  align-items: center;
-
-  &__caption {
-    margin-left: 15px;
-  }
-
-  &__fullname {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--primary-color);
-    margin-bottom: 0;
   }
 }

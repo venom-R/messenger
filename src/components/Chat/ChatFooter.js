@@ -11,13 +11,14 @@ const emojiCategories = ['search', 'recent', 'people', 'nature', 'foods', 'activ
 const EmojiPicker = props => {
   return (
     <Picker
-      set="apple"
       include={emojiCategories}
       autofocus={true}
       darkMode={false}
       showPreview={false}
       showSkinTones={false}
+      native={true}
       color="#0a80ff"
+      emojiSize={18}
       onSelect={emoji => console.log(emoji)}
     />
   );

@@ -2,6 +2,7 @@
 @import './styled-scroll';
 
 :root {
+  --font-family: Roboto, sans-serif;
   --body-bg-color: #fff;
   --border-color: #ebebeb;
   --primary-color: #212529;
@@ -14,7 +15,7 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-family);
 }
 
 .text {
