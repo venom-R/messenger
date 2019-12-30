@@ -1,11 +1,9 @@
 import React from 'react';
-import { ListGroup, ListGroupItem } from '../List';
 import Avatar from '../Avatar';
 import classNames from 'classnames';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-
-import './ChatItem.scss';
 import { Button, Dropdown, Menu } from 'antd';
+import './ChatItem.scss';
 
 const chatsData = [
   {
@@ -34,16 +32,6 @@ const chatsData = [
   },
 ];
 
-const ChatList = props => {
-  return (
-    <ListGroup>
-      {chatsData.map(chatItem => (
-        <ChatItem key={chatItem.id} data={chatItem} />
-      ))}
-    </ListGroup>
-  );
-};
-
 const chatItemMenu = (
   <Menu>
     <Menu.Item>
@@ -63,35 +51,47 @@ const chatItemMenu = (
   </Menu>
 );
 
+const ChatList = props => {
+  return (
+    <div className="ChatList list-group">
+      {chatsData.map(chatItem => (
+        <ChatItem key={chatItem.id} data={chatItem} />
+      ))}
+    </div>
+  );
+};
+
 const ChatItem = ({ data }) => {
   const { avatar, fullName, body, time, unreadCounter } = data;
   const isUnread = unreadCounter > 0;
   const chatItemClassName = classNames({
+    'list-group-item': true,
+    'list-group__item': true,
     ChatItem: true,
     ChatItem_unread: isUnread,
-    ListGroupItem_active: false,
+    'list-group-item_active': false,
   });
   return (
-    <ListGroupItem className={chatItemClassName}>
-      <div className="ListGroupItem__avatar">
+    <div className={chatItemClassName}>
+      <div className="list-group-item__avatar">
         <Avatar src={avatar} alt={fullName} />
       </div>
-      <div className="ListGroupItem__body">
-        <h5 className="ListGroupItem__title ChatItem__title">{fullName}</h5>
-        <div className="ListGroupItem__content ChatItem__content">{body}</div>
+      <div className="list-group-item__body">
+        <h5 className="list-group-item__title ChatItem__title">{fullName}</h5>
+        <div className="list-group-item__content ChatItem__content">{body}</div>
       </div>
-      <div className="ListGroupItem__actions">
+      <div className="list-group-item__actions">
         {isUnread && <div className="ChatItem__unread-counter">{unreadCounter}</div>}
         <small className="ChatItem__time">{time}</small>
         {!isUnread && (
           <Dropdown overlay={chatItemMenu} placement="bottomRight" trigger={['click']}>
-            <Button type="link" className="ListGroupItem__dropdown">
+            <Button type="link" className="list-group-item__dropdown">
               <Icon icon={['fas', 'ellipsis-h']} />
             </Button>
           </Dropdown>
         )}
       </div>
-    </ListGroupItem>
+    </div>
   );
 };
 

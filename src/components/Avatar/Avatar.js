@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { randomInteger } from '../../helpers';
+import { randomInteger } from '../../utils/helpers';
 import './Avatar.scss';
 
 const avatarBgColors = [

@@ -1,10 +1,11 @@
-.ListGroup {
+.list-group {
   list-style: none;
   padding: 0;
   margin: 0;
 
   &__item {
     padding: 15px 30px;
+    display: flex;
 
     &:not(:last-child) {
       border-bottom: 1px solid var(--border-color);
@@ -12,8 +13,7 @@
   }
 }
 
-.ListGroupItem {
-  display: flex;
+.list-group-item {
 
   &__avatar {
     padding-top: 5px;
