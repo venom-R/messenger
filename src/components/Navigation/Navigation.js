@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Badge, Button, Divider, Dropdown, Menu, Tooltip } from 'antd';
+import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import Logo from './Logo';
+import Logo from '../Logo';
+import Avatar from '../Avatar';
+import NavigationItem from './NavigationItem';
 
 import './Navigation.scss';
 import avatar from './temp-avatar.png';
-import Avatar from '../Avatar';
 
 const userMenu = (
   <Menu>
@@ -26,20 +27,6 @@ const userMenu = (
     </Menu.Item>
   </Menu>
 );
-
-const NavigationItem = ({ link, isVisibleBadge, badgeStatus, tooltipTitle, children }) => {
-  return (
-    <Tooltip placement="right" title={tooltipTitle}>
-      <a href={link} className="Navigation__link">
-        <Badge
-          status={badgeStatus}
-          className={`Navigation__badge-container ${isVisibleBadge ? '' : 'hidden'}`}>
-          {children}
-        </Badge>
-      </a>
-    </Tooltip>
-  );
-};
 
 const Navigation = () => {
   return (

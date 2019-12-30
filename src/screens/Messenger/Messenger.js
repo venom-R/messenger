@@ -1,15 +1,15 @@
 import React from 'react';
 
-import NavigationBar from '../NavigationBar';
-import Sidebar from '../Sidebar';
-import Chat from '../Chat';
+import Navigation from '../../components/Navigation';
+import Sidebar from '../../components/Sidebar';
+import Chat from '../../components/Chat';
 
 import './Messenger.scss';
 
 const Messenger = () => {
   return (
-    <div className="Messenger" data-theme="light">
-      <NavigationBar />
+    <div className="Messenger">
+      <Navigation />
       <div className="content">
         <Sidebar />
         <Chat />

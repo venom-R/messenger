@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100px;
+  border-right: 1px solid var(--border-color);
 
   &__logo {
     margin-bottom: 20px;
