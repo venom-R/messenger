@@ -1,11 +1,9 @@
 import React from 'react';
 import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import SocialIcon from '../SocialIcon';
 import * as ROUTES from '../../constants/routes';
-import { Link } from 'react-router-dom';
 
-const SignInForm = props => {
+const ResetPasswordForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
 
   const onSubmit = event => {
@@ -19,6 +17,10 @@ const SignInForm = props => {
 
   const onGoToSignUp = () => {
     props.history.push(ROUTES.SIGN_UP);
+  };
+
+  const onGoToSignIn = () => {
+    props.history.push(ROUTES.SIGN_IN);
   };
 
   return (
@@ -39,48 +41,23 @@ const SignInForm = props => {
           })(<Input placeholder="Email" name="email" />)}
         </Form.Item>
 
-        <Form.Item className="form-membership__item">
-          {getFieldDecorator('password', {
-            rules: [
-              { required: true, message: 'Please input your Password!' },
-              { min: 6, message: 'Password should contain at least 6 characters' },
-            ],
-          })(<Input.Password type="password" placeholder="Password" name="password" />)}
-        </Form.Item>
-
         <Form.Item className="mb-2">
           <Button type="primary" htmlType="submit" className="form-membership__submit">
-            Sign in
+            Submit
           </Button>
         </Form.Item>
 
-        <div className="text-center">
-          <Link className="form-membership__submit" to={ROUTES.RESET_PASSWORD}>
-            Reset password
-          </Link>
-        </div>
-
         <Divider />
         <div className="text-center">
-          <h4 className="form-membership__sub-title">Login with your social media account</h4>
-          <button type="button" className="btn btn_transparent">
-            <SocialIcon brand="google" />
-          </button>
-          <button type="button" className="btn btn_transparent">
-            <SocialIcon brand="github" />
-          </button>
-        </div>
-
-        <Divider />
-        <div className="text-center">
-          <h4 className="form-membership__sub-title">Don't have an account?</h4>
-          <Button onClick={onGoToSignUp}>Register now!</Button>
+          <h4 className="form-membership__sub-title">Take a different action.</h4>
+          <Button onClick={onGoToSignUp}>Register now!</Button> or{' '}
+          <Button onClick={onGoToSignIn}>Login!</Button>
         </div>
       </Form>
     </div>
   );
 };
 
-const WrappedSignInForm = Form.create({ name: 'sign_in' })(SignInForm);
+const WrappedResetPasswordForm = Form.create({ name: 'reset_password' })(ResetPasswordForm);
 
-export default WrappedSignInForm;
+export default WrappedResetPasswordForm;
