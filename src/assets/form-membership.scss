@@ -1,0 +1,43 @@
+.form-membership {
+  position: relative;
+  margin: 50px auto;
+  width: 430px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  padding: 48px;
+  background: var(--body-bg-color);
+
+  &__wrapper {
+    padding: 48px 0;
+  }
+
+  &__logo {
+    position: absolute;
+    top: -38px;
+    left: calc(50% - 58px);
+    font-size: 56px;
+    background: var(--body-bg-color);
+    color: var(--accent-color);
+    padding: 0 30px;
+  }
+
+  &__title {
+    margin-top: 32px;
+    margin-bottom: 25px;
+  }
+
+  &__sub-title {
+    color: var(--secondary-color);
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 15px;
+  }
+
+  &__submit {
+    width: 100%;
+  }
+
+  &__item {
+    margin-bottom: 15px;
+  }
+}

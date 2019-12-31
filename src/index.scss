@@ -1,6 +1,7 @@
 @import './assets/helpers';
 @import './assets/styled-scroll';
 @import './assets/list-group';
+@import './assets/form-membership';
 
 :root {
   --font-family: Roboto, sans-serif;
@@ -40,5 +41,11 @@ body {
 .btn {
   &_secondary {
     background: var(--secondary--bg-color);
+  }
+
+  &_transparent {
+    background: transparent;
+    border: none;
+    outline: none;
   }
 }

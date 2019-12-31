@@ -1,0 +1,41 @@
+$brand-color: (
+  'facebook': #3b5998,
+  'google': #db4437,
+  'twitter': #55acee,
+  'dribble': #ea4c89,
+  'linkedin': #0077b5,
+  'instagram': #3f729b,
+  'github': #24292e,
+);
+
+.SocialIcon {
+  display: inline-flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 35px;
+  color: var(--white-color);
+  border: 1px solid;
+  transition: all 0.3s ease;
+
+  &_xs {
+    height: 30px;
+    width: 30px;
+  }
+
+  &_round {
+    border-radius: 50%;
+  }
+
+  @each $name, $color in $brand-color {
+    &.#{$name} {
+      background: $color;
+      border-color: $color;
+
+      &:hover {
+        background: darken($color, 10);
+        border-color: darken($color, 10);
+      }
+    }
+  }
+}
