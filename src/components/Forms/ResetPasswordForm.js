@@ -30,7 +30,7 @@ const ResetPasswordForm = props => {
           <Icon icon={['far', 'comment-dots']} />
         </div>
 
-        <h2 className="form-membership__title text-center">Sign in</h2>
+        <h2 className="form-membership__title text-center">Reset password</h2>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('email', {
