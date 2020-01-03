@@ -6,6 +6,8 @@ import Chat from '../../components/Chat';
 
 import './Messenger.scss';
 
+import EditProfileModal from '../../components/Modals/EditProfileModal'; // TODO
+
 const Messenger = () => {
   return (
     <div className="Messenger">
@@ -14,6 +16,7 @@ const Messenger = () => {
         <Sidebar />
         <Chat />
       </div>
+      <EditProfileModal visible={true} />
     </div>
   );
 };
