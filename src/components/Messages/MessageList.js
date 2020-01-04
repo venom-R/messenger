@@ -20,7 +20,7 @@ const messages = [
     content: "What's up, how are you?",
   },
   {
-    id: 1,
+    id: 2,
     user: authUser,
     timestamp: '03:42',
     content: 'everything is fine, thx',
@@ -31,7 +31,11 @@ const MessageList = props => {
   return (
     <div className="MessageList">
       {messages.map(messageItem => (
-        <MessageItem data={messageItem} outgoing={messageItem.user.id === authUser.id} />
+        <MessageItem
+          key={messageItem.id}
+          data={messageItem}
+          outgoing={messageItem.user.id === authUser.id}
+        />
       ))}
     </div>
   );
