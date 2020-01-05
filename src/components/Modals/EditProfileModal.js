@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Modal, Tabs } from 'antd';
-import EditProfileForm from '../Forms/EditProfileForm';
+import EditProfileForm from '../Forms/EditProfileForm/EditProfileForm';
 
 const EditProfileModal = ({ visible, onCancel }) => {
   return (

@@ -10,7 +10,7 @@ import './Messenger.scss';
 import EditProfileModal from '../../components/Modals/EditProfileModal'; // TODO
 
 const Messenger = () => {
-  const [isProfileOpen, setIsProfileOpen] = useState(true);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const onProfileClose = () => {
     setIsProfileOpen(false);
@@ -24,7 +24,7 @@ const Messenger = () => {
         <Chat />
         {isProfileOpen && <Profile onClose={onProfileClose} />}
       </div>
-      <EditProfileModal visible={true} />
+      <EditProfileModal visible={false} />
     </div>
   );
 };

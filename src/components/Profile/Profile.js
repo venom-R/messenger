@@ -18,7 +18,7 @@ const userData = {
   socialMedia: {
     facebook: 'roma.teleshyk',
     twitter: '',
-    dribble: '',
+    dribbble: '',
     linkedin: '',
     instagram: 'roma_teleshyk',
     github: 'venom-R',
