@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Form, Input, Tabs } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+import SocialIcon from '../../components/SocialIcon';
 import './EditProfileForm.scss';
-import SocialIcon from '../../SocialIcon';
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;

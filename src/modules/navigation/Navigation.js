@@ -1,34 +1,32 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 
 import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import Logo from '../Logo';
-import Avatar from '../Avatar';
+import Logo from '../../components/Logo';
+import Avatar from '../../components/Avatar';
 import NavigationItem from './NavigationItem';
+
+import { openEditProfileModal } from '../editProfile/editProfileSlice';
 
 import './Navigation.scss';
 import avatar from './temp-avatar.png';
 
-const userMenu = (
-  <Menu>
-    <Menu.Item>
-      <a href="http://www.alipay.com/">Edit profile</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a href="http://www.taobao.com/">Profile</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a href="http://www.tmall.com/">Settings</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a href="http://www.tmall.com/" className="text_danger">
-        Logout
-      </a>
-    </Menu.Item>
-  </Menu>
-);
-
 const Navigation = () => {
+  const dispatch = useDispatch();
+  const actions = bindActionCreators({ openEditProfileModal }, dispatch);
+  const userMenu = (
+    <Menu>
+      <Menu.Item onClick={actions.openEditProfileModal}>Edit profile</Menu.Item>
+      <Menu.Item>Profile</Menu.Item>
+      <Menu.Item>Settings</Menu.Item>
+      <Menu.Item>
+        <span className="text_danger">Logout</span>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <nav className="Navigation">
       <Logo classList="Navigation__logo" />

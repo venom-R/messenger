@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 
-import Navigation from '../../components/Navigation';
+import Navigation from '../../modules/navigation/Navigation';
 import Sidebar from '../../components/Sidebar';
 import Chat from '../../components/Chat';
 import Profile from '../../components/Profile';
+import EditProfileModal from '../../modules/editProfile/EditProfileModal';
 
 import './Messenger.scss';
-
-import EditProfileModal from '../../components/Modals/EditProfileModal'; // TODO
 
 const Messenger = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -24,7 +23,7 @@ const Messenger = () => {
         <Chat />
         {isProfileOpen && <Profile onClose={onProfileClose} />}
       </div>
-      <EditProfileModal visible={false} />
+      <EditProfileModal />
     </div>
   );
 };
