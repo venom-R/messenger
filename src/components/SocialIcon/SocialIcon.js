@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+
 import './SocialIcon.scss';
 
 const icons = {

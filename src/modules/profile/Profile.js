@@ -6,7 +6,6 @@ import Avatar from '../../components/Avatar';
 import SocialMediaList from '../../components/SocialMediaList';
 
 import './Profile.scss';
-import { useDispatch } from 'react-redux';
 
 const userData = {
   firstname: 'Roma',
@@ -66,7 +65,7 @@ const Profile = ({ onClose }) => {
             <div className="py-2">
               <h4 className="Profile__sub-title">Website</h4>
               <p className="Profile__text">
-                <a href={userData.website} target="_blank">
+                <a href={userData.website} target="_blank" rel="noopener noreferrer">
                   {userData.website}
                 </a>
               </p>

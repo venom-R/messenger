@@ -25,7 +25,7 @@ const SocialMediaList = ({ list }) => {
     <ul className="SocialMediaList pt-1">
       {socialMedia.map(item => (
         <li key={item.name} className="mr-2 mb-2">
-          <a href={item.href} target="_blank">
+          <a href={item.href} target="_blank" rel="noopener noreferrer">
             <SocialIcon brand={item.name} xs={true} />
           </a>
         </li>
