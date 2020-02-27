@@ -59,7 +59,7 @@
       transition: opacity 0.3s ease;
     }
 
-    &.hidden sup {
+    &.Navigation__badge-container_hidden sup {
       opacity: 0;
     }
   }
