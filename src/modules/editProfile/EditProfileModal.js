@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Modal } from 'antd';
 import EditProfileForm from './EditProfileForm';
+
 import { closeEditProfileModal } from './editProfileSlice';
+import { visibilityEditProfileSelector } from './editProfileSelector';
 
 const EditProfileModal = () => {
-  const isVisible = useSelector(state => state.editProfile.isModalVisible);
+  const isVisible = useSelector(visibilityEditProfileSelector);
   const dispatch = useDispatch();
   const close = useCallback(() => {
     dispatch(closeEditProfileModal());

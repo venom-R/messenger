@@ -7,10 +7,12 @@ import Chat from '../../components/Chat';
 import EditProfileModal from '../../modules/editProfile/EditProfileModal';
 import ProfileContainer from '../../modules/profile/ProfileContainer';
 
+import { visibilityProfileSelector } from '../../modules/profile/profileSelectors';
+
 import './Messenger.scss';
 
 const Messenger = () => {
-  const isProfileVisible = useSelector(state => state.profile.isVisible);
+  const isProfileVisible = useSelector(visibilityProfileSelector);
 
   return (
     <div className="Messenger">

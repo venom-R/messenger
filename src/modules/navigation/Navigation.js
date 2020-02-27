@@ -1,32 +1,24 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import Logo from '../../components/Logo';
-import Avatar from '../../components/Avatar';
 import NavigationItem from './NavigationItem';
+import ThemeSwitcher from './ThemeSwitcher';
+import UserMenu from './UserMenu';
 
 import { openEditProfileModal } from '../editProfile/editProfileSlice';
 import { openProfile } from '../profile/profileSlice';
+import { setTheme } from '../../App/appSlice';
+import { themeSelector } from '../../App/appSelectors';
 
 import './Navigation.scss';
-import avatar from './temp-avatar.png';
 
 const Navigation = () => {
+  const theme = useSelector(themeSelector);
   const dispatch = useDispatch();
-  const actions = bindActionCreators({ openEditProfileModal, openProfile }, dispatch);
-  const userMenu = (
-    <Menu>
-      <Menu.Item onClick={actions.openEditProfileModal}>Edit profile</Menu.Item>
-      <Menu.Item onClick={actions.openProfile}>Profile</Menu.Item>
-      <Menu.Item>Settings</Menu.Item>
-      <Menu.Item>
-        <span className="text_danger">Logout</span>
-      </Menu.Item>
-    </Menu>
-  );
+  const actions = bindActionCreators({ openEditProfileModal, openProfile, setTheme }, dispatch);
 
   return (
     <nav className="Navigation">
@@ -76,21 +68,14 @@ const Navigation = () => {
 
       <ul className="Navigation__links-group Navigation__links-group_bottom">
         <li className="Navigation__group-item">
-          <Tooltip placement="right" title="Dark mode">
-            <Button type="link" className="Navigation__btn">
-              <Icon icon={['far', 'moon']} />
-            </Button>
-          </Tooltip>
+          <ThemeSwitcher theme={theme} setTheme={actions.setTheme} />
         </li>
 
         <li className="Navigation__group-item">
-          <Tooltip placement="right" title="User menu">
-            <Dropdown overlay={userMenu} placement="topLeft" trigger={['click']}>
-              <Button type="primary" shape="circle" className="Navigation__settings-btn">
-                <Avatar src={avatar} alt="Profile avatar" />
-              </Button>
-            </Dropdown>
-          </Tooltip>
+          <UserMenu
+            openEditProfileModal={actions.openEditProfileModal}
+            openProfile={actions.openProfile}
+          />
         </li>
       </ul>
     </nav>
