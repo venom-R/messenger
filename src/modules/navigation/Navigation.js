@@ -9,17 +9,18 @@ import Avatar from '../../components/Avatar';
 import NavigationItem from './NavigationItem';
 
 import { openEditProfileModal } from '../editProfile/editProfileSlice';
+import { openProfile } from '../profile/profileSlice';
 
 import './Navigation.scss';
 import avatar from './temp-avatar.png';
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const actions = bindActionCreators({ openEditProfileModal }, dispatch);
+  const actions = bindActionCreators({ openEditProfileModal, openProfile }, dispatch);
   const userMenu = (
     <Menu>
       <Menu.Item onClick={actions.openEditProfileModal}>Edit profile</Menu.Item>
-      <Menu.Item>Profile</Menu.Item>
+      <Menu.Item onClick={actions.openProfile}>Profile</Menu.Item>
       <Menu.Item>Settings</Menu.Item>
       <Menu.Item>
         <span className="text_danger">Logout</span>

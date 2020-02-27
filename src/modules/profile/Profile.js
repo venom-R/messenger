@@ -1,9 +1,12 @@
 import React from 'react';
+
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import './Profile.scss';
 import { Button } from 'antd';
-import Avatar from '../Avatar';
-import SocialMediaList from '../SocialMediaList';
+import Avatar from '../../components/Avatar';
+import SocialMediaList from '../../components/SocialMediaList';
+
+import './Profile.scss';
+import { useDispatch } from 'react-redux';
 
 const userData = {
   firstname: 'Roma',

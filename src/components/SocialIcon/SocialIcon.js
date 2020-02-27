@@ -14,7 +14,6 @@ const icons = {
 };
 
 const SocialIcon = ({ brand, round = true, xs = false }) => {
-  console.log(icons[brand]);
   const socialIconClassName = classNames({
     SocialIcon: true,
     [brand]: true,
