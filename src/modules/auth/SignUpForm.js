@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import * as ROUTES from '../../constants/routes';
+import Auth from '../../firebase/Auth';
+import { rules } from './validationsRules';
 
 const SignUpForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
@@ -9,8 +11,16 @@ const SignUpForm = props => {
   const onSubmit = event => {
     event.preventDefault();
     validateFields((err, values) => {
+      const { firstName, lastName, email, password } = values;
       if (!err) {
         console.log('Received values of form: ', values);
+        Auth.createUser(firstName, lastName, email, password)
+          .then(() => {
+            props.history.push(ROUTES.HOME);
+          })
+          .catch(error => {
+            console.error(error);
+          });
       }
     });
   };
@@ -28,33 +38,34 @@ const SignUpForm = props => {
         <h2 className="form-membership__title text-center">Create account</h2>
 
         <Form.Item className="form-membership__item">
-          {getFieldDecorator('firstname', {
-            rules: [{ required: true, message: 'Please input your first name!' }],
-          })(<Input placeholder="First name" name="firstname" />)}
+          {getFieldDecorator('firstName', {
+            rules: rules.firstName,
+          })(<Input placeholder="First name" name="firstName" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
-          {getFieldDecorator('lastname', {
-            rules: [{ required: true, message: 'Please input your last name!' }],
-          })(<Input placeholder="Last name" name="lastname" />)}
+          {getFieldDecorator('lastName', {
+            rules: rules.lastName,
+          })(<Input placeholder="Last name" name="lastName" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('email', {
-            rules: [
-              { type: 'email', message: 'Email is not valid!' },
-              { required: true, message: 'Please input your email!' },
-            ],
+            rules: rules.email,
           })(<Input placeholder="Email" name="email" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('password', {
-            rules: [
-              { required: true, message: 'Please input your Password!' },
-              { min: 6, message: 'Password should contain at least 6 characters' },
-            ],
-          })(<Input.Password type="password" placeholder="Password" name="password" />)}
+            rules: rules.password,
+          })(
+            <Input.Password
+              type="password"
+              placeholder="Password"
+              name="password"
+              autoComplete="on"
+            />,
+          )}
         </Form.Item>
 
         <Form.Item className="mb-2">

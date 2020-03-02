@@ -8,17 +8,24 @@ import NavigationItem from './NavigationItem';
 import ThemeSwitcher from './ThemeSwitcher';
 import UserMenu from './UserMenu';
 
+import Auth from '../../firebase/Auth';
 import { openEditProfileModal } from '../editProfile/editProfileSlice';
 import { openProfile } from '../profile/profileSlice';
 import { setTheme } from '../../App/appSlice';
 import { themeSelector } from '../../App/appSelectors';
+import * as ROUTES from '../../constants/routes';
 
 import './Navigation.scss';
 
-const Navigation = () => {
+const Navigation = ({ history }) => {
   const theme = useSelector(themeSelector);
   const dispatch = useDispatch();
   const actions = bindActionCreators({ openEditProfileModal, openProfile, setTheme }, dispatch);
+  const logout = () => {
+    Auth.signOut().then(() => {
+      history.push(ROUTES.SIGN_IN);
+    });
+  };
 
   return (
     <nav className="Navigation">
@@ -75,6 +82,7 @@ const Navigation = () => {
           <UserMenu
             openEditProfileModal={actions.openEditProfileModal}
             openProfile={actions.openProfile}
+            logout={logout}
           />
         </li>
       </ul>

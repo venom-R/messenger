@@ -5,13 +5,13 @@ import Avatar from '../../components/Avatar';
 
 import avatar from './temp-avatar.png';
 
-const UserMenu = ({ openEditProfileModal, openProfile }) => {
+const UserMenu = ({ openEditProfileModal, openProfile, logout }) => {
   const userMenu = (
     <Menu>
       <Menu.Item onClick={openEditProfileModal}>Edit profile</Menu.Item>
       <Menu.Item onClick={openProfile}>Profile</Menu.Item>
       <Menu.Item>Settings</Menu.Item>
-      <Menu.Item>
+      <Menu.Item onClick={logout}>
         <span className="text_danger">Logout</span>
       </Menu.Item>
     </Menu>

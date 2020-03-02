@@ -11,12 +11,12 @@ import { visibilityProfileSelector } from '../../modules/profile/profileSelector
 
 import './Messenger.scss';
 
-const Messenger = () => {
+const Messenger = props => {
   const isProfileVisible = useSelector(visibilityProfileSelector);
 
   return (
     <div className="Messenger">
-      <Navigation />
+      <Navigation history={props.history} />
       <div className="content">
         <Sidebar />
         <Chat />

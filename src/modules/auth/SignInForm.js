@@ -1,9 +1,14 @@
 import React from 'react';
+
+import { Link } from 'react-router-dom';
 import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import SocialIcon from '../SocialIcon';
+import SocialIcon from '../../components/SocialIcon';
+
 import * as ROUTES from '../../constants/routes';
-import { Link } from 'react-router-dom';
+import Auth from '../../firebase/Auth';
+import { rules } from './validationsRules';
+import { AUTH_ERRORS_CUSTOM_MESSAGES } from '../../firebase/errorMessages';
 
 const SignInForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
@@ -11,8 +16,26 @@ const SignInForm = props => {
   const onSubmit = event => {
     event.preventDefault();
     validateFields((err, values) => {
+      const { email, password } = values;
       if (!err) {
         console.log('Received values of form: ', values);
+        Auth.signIn(email, password)
+          .then(() => {
+            props.history.push(ROUTES.HOME);
+          })
+          .catch(error => {
+            console.error(error);
+            props.form.setFields({
+              email: {
+                value: values.email,
+                errors: [new Error(AUTH_ERRORS_CUSTOM_MESSAGES[error.code] || error.message)],
+              },
+              password: {
+                value: values.password,
+                errors: [new Error(AUTH_ERRORS_CUSTOM_MESSAGES[error.code] || error.message)],
+              },
+            });
+          });
       }
     });
   };
@@ -32,19 +55,13 @@ const SignInForm = props => {
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('email', {
-            rules: [
-              { type: 'email', message: 'Email is not valid!' },
-              { required: true, message: 'Please input your email!' },
-            ],
+            rules: rules.email,
           })(<Input placeholder="Email" name="email" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('password', {
-            rules: [
-              { required: true, message: 'Please input your Password!' },
-              { min: 6, message: 'Password should contain at least 6 characters' },
-            ],
+            rules: rules.password,
           })(<Input.Password type="password" placeholder="Password" name="password" />)}
         </Form.Item>
 
