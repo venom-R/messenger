@@ -40,6 +40,26 @@ const SignInForm = props => {
     });
   };
 
+  const onSignInWithGoogle = () => {
+    Auth.signInWithGoogle()
+      .then(result => {
+        console.log(result.user);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const onSignInWithGithub = () => {
+    Auth.signInWithGithub()
+      .then(result => {
+        console.log(result.user);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const onGoToSignUp = () => {
     props.history.push(ROUTES.SIGN_UP);
   };
@@ -80,10 +100,10 @@ const SignInForm = props => {
         <Divider />
         <div className="text-center">
           <h4 className="form-membership__sub-title">Login with your social media account</h4>
-          <button type="button" className="btn btn_transparent">
+          <button type="button" className="btn btn_transparent" onClick={onSignInWithGoogle}>
             <SocialIcon brand="google" />
           </button>
-          <button type="button" className="btn btn_transparent">
+          <button type="button" className="btn btn_transparent" onClick={onSignInWithGithub}>
             <SocialIcon brand="github" />
           </button>
         </div>
