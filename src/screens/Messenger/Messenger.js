@@ -16,7 +16,7 @@ const Messenger = props => {
 
   return (
     <div className="Messenger">
-      <Navigation history={props.history} />
+      <Navigation />
       <div className="content">
         <Sidebar />
         <Chat />

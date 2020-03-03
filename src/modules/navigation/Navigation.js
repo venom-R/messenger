@@ -13,19 +13,14 @@ import { openEditProfileModal } from '../editProfile/editProfileSlice';
 import { openProfile } from '../profile/profileSlice';
 import { setTheme } from '../../App/appSlice';
 import { themeSelector } from '../../App/appSelectors';
-import * as ROUTES from '../../constants/routes';
 
 import './Navigation.scss';
 
-const Navigation = ({ history }) => {
+const Navigation = () => {
   const theme = useSelector(themeSelector);
   const dispatch = useDispatch();
   const actions = bindActionCreators({ openEditProfileModal, openProfile, setTheme }, dispatch);
-  const logout = () => {
-    Auth.signOut().then(() => {
-      history.push(ROUTES.SIGN_IN);
-    });
-  };
+  const logout = () => Auth.signOut();
 
   return (
     <nav className="Navigation">

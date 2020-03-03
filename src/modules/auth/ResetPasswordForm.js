@@ -40,15 +40,15 @@ const ResetPasswordForm = props => {
   };
 
   return (
-    <div className="form-membership__wrapper">
-      <Form className="form-membership ResetPassword__form" onSubmit={onSubmit}>
+    <div className="form-membership">
+      <Form className="form-membership__inner ResetPassword__form" onSubmit={onSubmit}>
         <div className="form-membership__logo">
           <Icon icon={['far', 'comment-dots']} />
         </div>
 
         <h2 className="form-membership__title text-center">Reset password</h2>
 
-        {!isEmailSent && (
+        {!isEmailSent ? (
           <React.Fragment>
             <Form.Item className="form-membership__item">
               {getFieldDecorator('email', {
@@ -69,9 +69,9 @@ const ResetPasswordForm = props => {
               <Button onClick={onGoToSignIn}>Login!</Button>
             </div>
           </React.Fragment>
+        ) : (
+          <ResetPasswordSuccess onGoToSignIn={onGoToSignIn} />
         )}
-
-        {isEmailSent && <ResetPasswordSuccess onGoToSignIn={onGoToSignIn} />}
       </Form>
     </div>
   );

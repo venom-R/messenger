@@ -30,8 +30,8 @@ const SignUpForm = props => {
   };
 
   return (
-    <div className="form-membership__wrapper">
-      <Form className="form-membership SignIn__form" onSubmit={onSubmit}>
+    <div className="form-membership">
+      <Form className="form-membership__inner SignIn__form" onSubmit={onSubmit}>
         <div className="form-membership__logo">
           <Icon icon={['far', 'comment-dots']} />
         </div>

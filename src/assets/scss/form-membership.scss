@@ -1,14 +1,14 @@
 .form-membership {
-  position: relative;
-  margin: 50px auto;
-  width: 430px;
-  border-radius: 5px;
-  border: 1px solid var(--border-color);
-  padding: 48px;
-  background: var(--body-bg-color);
+  padding: 48px 0;
 
-  &__wrapper {
-    padding: 48px 0;
+  &__inner {
+    position: relative;
+    margin: 50px auto;
+    width: 430px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    padding: 48px;
+    background: var(--body-bg-color);
   }
 
   &__logo {
@@ -39,5 +39,11 @@
 
   &__item {
     margin-bottom: 15px;
+  }
+
+  &__text {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    line-height: 1.6;
   }
 }

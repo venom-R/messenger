@@ -43,9 +43,9 @@ const App = () => {
         <ProtectedRoute
           path={ROUTES.HOME}
           component={Messenger}
-          exact
           permitted={isAuthenticated}
           redirectPath={ROUTES.SIGN_IN}
+          exact
         />
         <ProtectedRoute
           permitted={isAuthenticated}
