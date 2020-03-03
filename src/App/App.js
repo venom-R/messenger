@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -7,6 +7,7 @@ import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import Messenger from '../screens/Messenger';
+import PageNotFound from '../screens/PageNotFound';
 
 import { useAuthentication } from '../hooks';
 import { themeSelector } from './appSelectors';
@@ -46,7 +47,11 @@ const App = () => {
           permitted={isAuthenticated}
           redirectPath={ROUTES.SIGN_IN}
         />
-        <Redirect to={isAuthenticated ? ROUTES.HOME : ROUTES.SIGN_IN} />
+        <ProtectedRoute
+          permitted={isAuthenticated}
+          component={PageNotFound}
+          redirectPath={ROUTES.SIGN_IN}
+        />
       </Switch>
     </div>
   );
