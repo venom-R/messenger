@@ -4,19 +4,28 @@ import PropTypes from 'prop-types';
 
 import * as ROUTES from '../../constants/routes';
 
-const renderRoute = (permitted, Component, redirectPath) => props => {
-  return permitted ? <Component {...props} /> : <Redirect to={redirectPath} />;
-};
-
-const ProtectedRoute = ({ path, component, permitted, redirectPath = ROUTES.HOME, ...rest }) => {
-  return <Route path={path} {...rest} render={renderRoute(permitted, component, redirectPath)} />;
+const ProtectedRoute = ({
+  component: Component,
+  permitted,
+  redirectPath = ROUTES.HOME,
+  ...rest
+}) => {
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        return permitted ? <Component {...props} /> : <Redirect to={redirectPath} />;
+      }}
+    />
+  );
 };
 
 ProtectedRoute.propTypes = {
-  path: PropTypes.string.isRequired,
   component: PropTypes.elementType.isRequired,
   permitted: PropTypes.bool.isRequired,
+  path: PropTypes.string,
   redirectPath: PropTypes.string,
+  exact: PropTypes.bool,
 };
 
 export default ProtectedRoute;
