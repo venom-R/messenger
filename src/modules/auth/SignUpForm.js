@@ -3,7 +3,7 @@ import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import * as ROUTES from '../../constants/routes';
 import Auth from '../../firebase/Auth';
-import { rules } from './validationsRules';
+import { VALIDATION_RULES } from '../../constants/validationsRules';
 
 const SignUpForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
@@ -39,25 +39,25 @@ const SignUpForm = props => {
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('firstName', {
-            rules: rules.firstName,
+            rules: VALIDATION_RULES.firstName,
           })(<Input placeholder="First name" name="firstName" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('lastName', {
-            rules: rules.lastName,
+            rules: VALIDATION_RULES.lastName,
           })(<Input placeholder="Last name" name="lastName" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('email', {
-            rules: rules.email,
+            rules: VALIDATION_RULES.email,
           })(<Input placeholder="Email" name="email" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('password', {
-            rules: rules.password,
+            rules: VALIDATION_RULES.password,
           })(
             <Input.Password
               type="password"

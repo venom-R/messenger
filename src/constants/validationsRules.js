@@ -1,4 +1,4 @@
-export const rules = {
+export const VALIDATION_RULES = {
   firstName: [{ required: true, message: 'Please input your first name!' }],
   lastName: [{ required: true, message: 'Please input your last name!' }],
   email: [

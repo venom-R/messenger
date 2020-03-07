@@ -1,68 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Button, Divider, Form, Input } from 'antd';
+import { Button, Divider, Form, Input, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import SocialIcon from '../../components/SocialIcon';
 
-import * as ROUTES from '../../constants/routes';
 import Auth from '../../firebase/Auth';
-import { rules } from './validationsRules';
-import { AUTH_ERRORS_CUSTOM_MESSAGES } from '../../firebase/errorMessages';
+import { createFieldsErrors, getErrorMessage } from './helpers';
+import { VALIDATION_RULES } from '../../constants/validationsRules';
+import * as ROUTES from '../../constants/routes';
+
+const initialLoginState = {
+  loading: false,
+  error: null,
+};
 
 const SignInForm = props => {
-  const { getFieldDecorator, validateFields } = props.form;
+  const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
+  const [loginWithEmailState, setLoginWithEmailState] = useState(initialLoginState);
+  const [loginWithGithubError, setLoginWithGithubError] = useState(null);
+  const [loginWithGoogleError, setLoginWithGoogleError] = useState(null);
 
-  const onSubmit = event => {
+  const loginWithEmail = async (email, password) => {
+    try {
+      setLoginWithEmailState(state => ({ ...state, loading: true }));
+      await Auth.signIn(email, password);
+    } catch (error) {
+      setLoginWithEmailState(state => ({ ...state, loading: false, error }));
+    }
+  };
+
+  const onLoginWithGoogle = async () => {
+    try {
+      await Auth.signInWithGoogle();
+    } catch (error) {
+      setLoginWithGoogleError(error);
+    }
+  };
+
+  const onLoginWithGithub = async () => {
+    try {
+      await Auth.signInWithGithub();
+    } catch (error) {
+      setLoginWithGithubError(error);
+    }
+  };
+
+  const onSubmit = async event => {
     event.preventDefault();
+
+    if (loginWithEmailState.loading) {
+      return;
+    }
+
     validateFields((err, values) => {
       const { email, password } = values;
       if (!err) {
-        console.log('Received values of form: ', values);
-        Auth.signIn(email, password)
-          .then(() => {
-            props.history.push(ROUTES.HOME);
-          })
-          .catch(error => {
-            console.error(error);
-            props.form.setFields({
-              email: {
-                value: values.email,
-                errors: [new Error(AUTH_ERRORS_CUSTOM_MESSAGES[error.code] || error.message)],
-              },
-              password: {
-                value: values.password,
-                errors: [new Error(AUTH_ERRORS_CUSTOM_MESSAGES[error.code] || error.message)],
-              },
-            });
-          });
+        loginWithEmail(email, password);
       }
     });
   };
 
-  const onSignInWithGoogle = () => {
-    Auth.signInWithGoogle()
-      .then(result => {
-        console.log(result.user);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  useEffect(() => {
+    if (loginWithEmailState.error) {
+      const values = getFieldsValue();
+      setFields(createFieldsErrors(values, loginWithEmailState.error));
+    }
+  }, [loginWithEmailState.error, getFieldsValue, setFields]);
 
-  const onSignInWithGithub = () => {
-    Auth.signInWithGithub()
-      .then(result => {
-        console.log(result.user);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const onGoToSignUp = () => {
-    props.history.push(ROUTES.SIGN_UP);
-  };
+  useEffect(() => {
+    if (loginWithGithubError || loginWithGoogleError) {
+      message.error(getErrorMessage(loginWithGoogleError || loginWithGithubError));
+    }
+  }, [loginWithGithubError, loginWithGoogleError]);
 
   return (
     <div className="form-membership">
@@ -75,18 +85,28 @@ const SignInForm = props => {
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('email', {
-            rules: rules.email,
-          })(<Input placeholder="Email" name="email" />)}
+            rules: VALIDATION_RULES.email,
+          })(<Input placeholder="Email" name="email" autoComplete="username" />)}
         </Form.Item>
 
         <Form.Item className="form-membership__item">
           {getFieldDecorator('password', {
-            rules: rules.password,
-          })(<Input.Password type="password" placeholder="Password" name="password" />)}
+            rules: VALIDATION_RULES.password,
+          })(
+            <Input.Password
+              placeholder="Password"
+              name="password"
+              autoComplete="current-password"
+            />,
+          )}
         </Form.Item>
 
         <Form.Item className="mb-2">
-          <Button type="primary" htmlType="submit" className="form-membership__submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="form-membership__submit"
+            loading={loginWithEmailState.loading}>
             Sign in
           </Button>
         </Form.Item>
@@ -100,10 +120,10 @@ const SignInForm = props => {
         <Divider />
         <div className="text-center">
           <h4 className="form-membership__sub-title">Login with your social media account</h4>
-          <button type="button" className="btn btn_transparent" onClick={onSignInWithGoogle}>
+          <button type="button" className="btn btn_transparent" onClick={onLoginWithGoogle}>
             <SocialIcon brand="google" />
           </button>
-          <button type="button" className="btn btn_transparent" onClick={onSignInWithGithub}>
+          <button type="button" className="btn btn_transparent" onClick={onLoginWithGithub}>
             <SocialIcon brand="github" />
           </button>
         </div>
@@ -111,7 +131,7 @@ const SignInForm = props => {
         <Divider />
         <div className="text-center">
           <h4 className="form-membership__sub-title">Don't have an account?</h4>
-          <Button onClick={onGoToSignUp}>Register now!</Button>
+          <Button onClick={() => props.history.push(ROUTES.SIGN_UP)}>Register now!</Button>
         </div>
       </Form>
     </div>

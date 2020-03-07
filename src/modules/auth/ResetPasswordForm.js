@@ -5,7 +5,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 import * as ROUTES from '../../constants/routes';
 import Auth from '../../firebase/Auth';
-import { rules } from './validationsRules';
+import { VALIDATION_RULES } from '../../constants/validationsRules';
 import ResetPasswordSuccess from './ResetPasswordSuccess';
 
 const ResetPasswordForm = props => {
@@ -52,7 +52,7 @@ const ResetPasswordForm = props => {
           <React.Fragment>
             <Form.Item className="form-membership__item">
               {getFieldDecorator('email', {
-                rules: rules.email,
+                rules: VALIDATION_RULES.email,
               })(<Input placeholder="Email" name="email" />)}
             </Form.Item>
 
