@@ -2,23 +2,22 @@ import { firebase, auth } from './core';
 import DB from './DB';
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
-const githubProvider = new firebase.auth.GithubAuthProvider(); // TODO token
+const githubProvider = new firebase.auth.GithubAuthProvider();
+
+const userFactory = user => ({
+  firstName: user.firstName || user.displayName || '',
+  lastName: user.lastName || '',
+  email: user.email || '',
+  photo: user.photoURL || '',
+  roles: {},
+});
 
 export default class Auth {
-  static createUser(firstName, lastName, email, password) {
-    const newUserData = {
-      firstName,
-      lastName,
-      email,
-      roles: {},
-    };
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(authUser => {
-        console.log(authUser);
-        return DB.createUser(authUser.user.uid, newUserData);
-      })
-      .then(() => Auth.sendEmailVerification());
+  static async createUser(firstName, lastName, email, password) {
+    const newUserData = userFactory({ firstName, lastName, email });
+    const authUser = await auth.createUserWithEmailAndPassword(email, password);
+    await DB.createUser(authUser.user.uid, newUserData);
+    return authUser;
   }
 
   static sendEmailVerification() {
@@ -31,12 +30,16 @@ export default class Auth {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
-  static signInWithGoogle() {
-    return auth.signInWithPopup(googleProvider);
+  static async signInWithGoogle() {
+    const authUser = await auth.signInWithPopup(googleProvider);
+    const newUserData = userFactory(authUser.user);
+    return DB.createUser(authUser.user.uid, newUserData);
   }
 
-  static signInWithGithub() {
-    return auth.signInWithPopup(githubProvider);
+  static async signInWithGithub() {
+    const authUser = await auth.signInWithPopup(githubProvider);
+    const newUserData = userFactory(authUser.user);
+    return DB.createUser(authUser.user.uid, newUserData);
   }
 
   static signOut() {
