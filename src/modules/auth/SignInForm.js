@@ -23,10 +23,11 @@ const SignInForm = props => {
 
   const loginWithEmail = async (email, password) => {
     try {
-      setLoginWithEmailState(state => ({ ...state, loading: true }));
+      setLoginWithEmailState({ error: null, loading: true });
       await Auth.signIn(email, password);
+      props.history.push(ROUTES.HOME);
     } catch (error) {
-      setLoginWithEmailState(state => ({ ...state, loading: false, error }));
+      setLoginWithEmailState({ loading: false, error });
     }
   };
 
