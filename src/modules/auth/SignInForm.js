@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
 import { Button, Divider, Form, Input, message } from 'antd';
@@ -6,28 +6,21 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import SocialIcon from '../../components/SocialIcon';
 
 import Auth from '../../firebase/Auth';
+import { useHttpRequest } from '../../hooks';
 import { createFieldsErrors, getErrorMessage } from './helpers';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
 
-const initialLoginState = {
-  loading: false,
-  error: null,
-};
-
 const SignInForm = props => {
-  const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
-  const [loginWithEmailRequest, setLoginWithEmailRequest] = useState(initialLoginState);
-  const [loginWithGithubError, setLoginWithGithubError] = useState(null);
-  const [loginWithGoogleError, setLoginWithGoogleError] = useState(null);
+  const { getFieldDecorator, validateFields, setFields } = props.form;
+  const loginWithEmailRequest = useHttpRequest(Auth.signIn);
 
   const loginWithEmail = async (email, password) => {
     try {
-      setLoginWithEmailRequest({ error: null, loading: true });
-      await Auth.signIn(email, password);
+      await loginWithEmailRequest.send(email, password);
       props.history.push(ROUTES.HOME);
     } catch (error) {
-      setLoginWithEmailRequest({ loading: false, error });
+      setFields(createFieldsErrors({ email, password }, error));
     }
   };
 
@@ -35,7 +28,7 @@ const SignInForm = props => {
     try {
       await Auth.signInWithGoogle();
     } catch (error) {
-      setLoginWithGoogleError(error);
+      message.error(getErrorMessage(error));
     }
   };
 
@@ -43,7 +36,7 @@ const SignInForm = props => {
     try {
       await Auth.signInWithGithub();
     } catch (error) {
-      setLoginWithGithubError(error);
+      message.error(getErrorMessage(error));
     }
   };
 
@@ -61,19 +54,6 @@ const SignInForm = props => {
       }
     });
   };
-
-  useEffect(() => {
-    if (loginWithEmailRequest.error) {
-      const values = getFieldsValue();
-      setFields(createFieldsErrors(values, loginWithEmailRequest.error));
-    }
-  }, [loginWithEmailRequest.error, getFieldsValue, setFields]);
-
-  useEffect(() => {
-    if (loginWithGithubError || loginWithGoogleError) {
-      message.error(getErrorMessage(loginWithGoogleError || loginWithGithubError));
-    }
-  }, [loginWithGithubError, loginWithGoogleError]);
 
   return (
     <div className="form-membership">

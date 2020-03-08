@@ -1,29 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 import Auth from '../../firebase/Auth';
+import { useHttpRequest } from '../../hooks';
 import { createFieldsErrors } from './helpers';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
 
-const initialSignUpRequest = {
-  loading: false,
-  error: null,
-};
-
 const SignUpForm = props => {
-  const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
-  const [signUpRequest, setSignUpRequest] = useState(initialSignUpRequest);
+  const { getFieldDecorator, validateFields, setFields } = props.form;
+  const signUpRequest = useHttpRequest(Auth.createUser);
 
   const signUp = async (firstName, lastName, email, password) => {
     try {
-      setSignUpRequest({ loading: true, error: null });
-      await Auth.createUser(firstName, lastName, email, password);
+      await signUpRequest.send(firstName, lastName, email, password);
       props.history.push(ROUTES.HOME);
     } catch (error) {
-      setSignUpRequest({ loading: false, error });
+      setFields(createFieldsErrors({ firstName, lastName, email, password }, error));
     }
   };
 
@@ -41,13 +36,6 @@ const SignUpForm = props => {
       }
     });
   };
-
-  useEffect(() => {
-    if (signUpRequest.error) {
-      const values = getFieldsValue();
-      setFields(createFieldsErrors(values, signUpRequest.error));
-    }
-  }, [signUpRequest.error, getFieldsValue, setFields]);
 
   return (
     <div className="form-membership">

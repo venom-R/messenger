@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
@@ -8,31 +8,26 @@ import Auth from '../../firebase/Auth';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
 import { createFieldsErrors } from './helpers';
-
-const initialRequestState = {
-  loading: false,
-  error: null,
-  isSent: false,
-};
+import { useHttpRequest } from '../../hooks';
 
 const ResetPasswordForm = props => {
-  const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
-  const [resetPasswordState, setResetPasswordState] = useState(initialRequestState);
+  const { getFieldDecorator, validateFields, setFields } = props.form;
+  const resetPasswordRequest = useHttpRequest(Auth.passwordReset);
+  const [isSent, setIsSent] = useState(false);
 
   const sendPasswordResetEmail = async email => {
     try {
-      setResetPasswordState({ ...initialRequestState, loading: true });
-      await Auth.passwordReset(email);
-      setResetPasswordState({ isSent: true, loading: false, error: null });
+      await resetPasswordRequest.send(email);
+      setIsSent(true);
     } catch (error) {
-      setResetPasswordState({ ...initialRequestState, error });
+      setFields(createFieldsErrors({ email }, error));
     }
   };
 
   const onSubmit = async event => {
     event.preventDefault();
 
-    if (resetPasswordState.loading) {
+    if (resetPasswordRequest.loading) {
       return;
     }
 
@@ -46,13 +41,6 @@ const ResetPasswordForm = props => {
   const onGoToSignUp = () => props.history.push(ROUTES.SIGN_UP);
   const onGoToSignIn = () => props.history.push(ROUTES.SIGN_IN);
 
-  useEffect(() => {
-    if (resetPasswordState.error) {
-      const values = getFieldsValue();
-      setFields(createFieldsErrors(values, resetPasswordState.error));
-    }
-  }, [resetPasswordState.error, getFieldsValue, setFields]);
-
   return (
     <div className="form-membership">
       <Form className="form-membership__inner ResetPassword__form" onSubmit={onSubmit}>
@@ -62,7 +50,7 @@ const ResetPasswordForm = props => {
 
         <h2 className="form-membership__title text-center">Reset password</h2>
 
-        {!resetPasswordState.isSent ? (
+        {!isSent ? (
           <React.Fragment>
             <Form.Item className="form-membership__item">
               {getFieldDecorator('email', {
@@ -71,7 +59,11 @@ const ResetPasswordForm = props => {
             </Form.Item>
 
             <Form.Item className="mb-2">
-              <Button type="primary" htmlType="submit" className="form-membership__submit" loading={resetPasswordState.loading}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="form-membership__submit"
+                loading={resetPasswordRequest.loading}>
                 Submit
               </Button>
             </Form.Item>
