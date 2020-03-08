@@ -17,17 +17,17 @@ const initialLoginState = {
 
 const SignInForm = props => {
   const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
-  const [loginWithEmailState, setLoginWithEmailState] = useState(initialLoginState);
+  const [loginWithEmailRequest, setLoginWithEmailRequest] = useState(initialLoginState);
   const [loginWithGithubError, setLoginWithGithubError] = useState(null);
   const [loginWithGoogleError, setLoginWithGoogleError] = useState(null);
 
   const loginWithEmail = async (email, password) => {
     try {
-      setLoginWithEmailState({ error: null, loading: true });
+      setLoginWithEmailRequest({ error: null, loading: true });
       await Auth.signIn(email, password);
       props.history.push(ROUTES.HOME);
     } catch (error) {
-      setLoginWithEmailState({ loading: false, error });
+      setLoginWithEmailRequest({ loading: false, error });
     }
   };
 
@@ -50,7 +50,7 @@ const SignInForm = props => {
   const onSubmit = async event => {
     event.preventDefault();
 
-    if (loginWithEmailState.loading) {
+    if (loginWithEmailRequest.loading) {
       return;
     }
 
@@ -63,11 +63,11 @@ const SignInForm = props => {
   };
 
   useEffect(() => {
-    if (loginWithEmailState.error) {
+    if (loginWithEmailRequest.error) {
       const values = getFieldsValue();
-      setFields(createFieldsErrors(values, loginWithEmailState.error));
+      setFields(createFieldsErrors(values, loginWithEmailRequest.error));
     }
-  }, [loginWithEmailState.error, getFieldsValue, setFields]);
+  }, [loginWithEmailRequest.error, getFieldsValue, setFields]);
 
   useEffect(() => {
     if (loginWithGithubError || loginWithGoogleError) {
@@ -107,7 +107,7 @@ const SignInForm = props => {
             type="primary"
             htmlType="submit"
             className="form-membership__submit"
-            loading={loginWithEmailState.loading}>
+            loading={loginWithEmailRequest.loading}>
             Sign in
           </Button>
         </Form.Item>

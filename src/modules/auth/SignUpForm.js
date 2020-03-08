@@ -8,29 +8,29 @@ import { createFieldsErrors } from './helpers';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
 
-const initialSignUpState = {
+const initialSignUpRequest = {
   loading: false,
   error: null,
 };
 
 const SignUpForm = props => {
   const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
-  const [signUpState, setSignUpState] = useState(initialSignUpState);
+  const [signUpRequest, setSignUpRequest] = useState(initialSignUpRequest);
 
   const signUp = async (firstName, lastName, email, password) => {
     try {
-      setSignUpState({ loading: true, error: null });
+      setSignUpRequest({ loading: true, error: null });
       await Auth.createUser(firstName, lastName, email, password);
       props.history.push(ROUTES.HOME);
     } catch (error) {
-      setSignUpState({ loading: false, error });
+      setSignUpRequest({ loading: false, error });
     }
   };
 
   const onSubmit = async event => {
     event.preventDefault();
 
-    if (signUpState.loading) {
+    if (signUpRequest.loading) {
       return;
     }
 
@@ -43,11 +43,11 @@ const SignUpForm = props => {
   };
 
   useEffect(() => {
-    if (signUpState.error) {
+    if (signUpRequest.error) {
       const values = getFieldsValue();
-      setFields(createFieldsErrors(values, signUpState.error));
+      setFields(createFieldsErrors(values, signUpRequest.error));
     }
-  }, [signUpState.error, getFieldsValue, setFields]);
+  }, [signUpRequest.error, getFieldsValue, setFields]);
 
   return (
     <div className="form-membership">
@@ -86,7 +86,7 @@ const SignUpForm = props => {
             type="primary"
             htmlType="submit"
             className="form-membership__submit"
-            loading={signUpState.loading}>
+            loading={signUpRequest.loading}>
             Register
           </Button>
         </Form.Item>

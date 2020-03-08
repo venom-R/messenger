@@ -1,43 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, Divider, Form, Input } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-
-import * as ROUTES from '../../constants/routes';
-import Auth from '../../firebase/Auth';
-import { VALIDATION_RULES } from '../../constants/validationsRules';
 import ResetPasswordSuccess from './ResetPasswordSuccess';
 
-const ResetPasswordForm = props => {
-  const { getFieldDecorator, validateFields } = props.form;
-  const [isEmailSent, setIsEmailSent] = useState(false);
+import Auth from '../../firebase/Auth';
+import { VALIDATION_RULES } from '../../constants/validationsRules';
+import * as ROUTES from '../../constants/routes';
+import { createFieldsErrors } from './helpers';
 
-  const onSubmit = event => {
+const initialRequestState = {
+  loading: false,
+  error: null,
+  isSent: false,
+};
+
+const ResetPasswordForm = props => {
+  const { getFieldDecorator, validateFields, getFieldsValue, setFields } = props.form;
+  const [resetPasswordState, setResetPasswordState] = useState(initialRequestState);
+
+  const sendPasswordResetEmail = async email => {
+    try {
+      setResetPasswordState({ ...initialRequestState, loading: true });
+      await Auth.passwordReset(email);
+      setResetPasswordState({ isSent: true, loading: false, error: null });
+    } catch (error) {
+      setResetPasswordState({ ...initialRequestState, error });
+    }
+  };
+
+  const onSubmit = async event => {
     event.preventDefault();
+
+    if (resetPasswordState.loading) {
+      return;
+    }
+
     validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        Auth.passwordReset(values.email)
-          .then(() => {
-            console.log('We have sent you a password reset confirmation email');
-            setIsEmailSent(true);
-          })
-          .catch(err => {
-            if (err.code === 'auth/user-not-found') {
-              console.log('This e-mail is not registered');
-            }
-          });
+        sendPasswordResetEmail(values.email);
       }
     });
   };
 
-  const onGoToSignUp = () => {
-    props.history.push(ROUTES.SIGN_UP);
-  };
+  const onGoToSignUp = () => props.history.push(ROUTES.SIGN_UP);
+  const onGoToSignIn = () => props.history.push(ROUTES.SIGN_IN);
 
-  const onGoToSignIn = () => {
-    props.history.push(ROUTES.SIGN_IN);
-  };
+  useEffect(() => {
+    if (resetPasswordState.error) {
+      const values = getFieldsValue();
+      setFields(createFieldsErrors(values, resetPasswordState.error));
+    }
+  }, [resetPasswordState.error, getFieldsValue, setFields]);
 
   return (
     <div className="form-membership">
@@ -48,7 +62,7 @@ const ResetPasswordForm = props => {
 
         <h2 className="form-membership__title text-center">Reset password</h2>
 
-        {!isEmailSent ? (
+        {!resetPasswordState.isSent ? (
           <React.Fragment>
             <Form.Item className="form-membership__item">
               {getFieldDecorator('email', {
@@ -57,7 +71,7 @@ const ResetPasswordForm = props => {
             </Form.Item>
 
             <Form.Item className="mb-2">
-              <Button type="primary" htmlType="submit" className="form-membership__submit">
+              <Button type="primary" htmlType="submit" className="form-membership__submit" loading={resetPasswordState.loading}>
                 Submit
               </Button>
             </Form.Item>
