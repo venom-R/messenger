@@ -61,4 +61,8 @@ export default class Auth {
       handler(authUser);
     });
   }
+
+  static getAuthUser() {
+    return new Promise(resolve => auth.onAuthStateChanged(user => resolve(user)));
+  }
 }

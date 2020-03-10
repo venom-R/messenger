@@ -10,4 +10,8 @@ export default class DB {
     }
     return DB.users.doc(uid).set(user);
   }
+
+  static getUser(uid) {
+    return DB.users.doc(uid).get();
+  }
 }

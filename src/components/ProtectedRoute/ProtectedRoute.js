@@ -1,20 +1,25 @@
 import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import EmailNotVerified from '../../modules/auth/EmailNotVerified';
+
+import { authUserSelector } from '../../modules/auth/authSelectors';
 import * as ROUTES from '../../constants/routes';
 
-const ProtectedRoute = ({
-  component: Component,
-  permitted,
-  redirectPath = ROUTES.HOME,
-  ...rest
-}) => {
+const ProtectedRoute = ({ component: Component, permit, redirectPath = ROUTES.HOME, ...rest }) => {
+  const authUser = useSelector(authUserSelector, shallowEqual);
+  const isAuthenticated = !!authUser;
+
   return (
     <Route
       {...rest}
       render={props => {
-        return permitted ? <Component {...props} /> : <Redirect to={redirectPath} />;
+        if (permit(isAuthenticated) && isAuthenticated && !authUser.emailVerified) {
+          return <EmailNotVerified />;
+        }
+        return permit(isAuthenticated) ? <Component {...props} /> : <Redirect to={redirectPath} />;
       }}
     />
   );
@@ -22,7 +27,7 @@ const ProtectedRoute = ({
 
 ProtectedRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
-  permitted: PropTypes.bool.isRequired,
+  permit: PropTypes.func.isRequired,
   path: PropTypes.string,
   redirectPath: PropTypes.string,
   exact: PropTypes.bool,
