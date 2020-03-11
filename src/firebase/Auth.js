@@ -9,6 +9,8 @@ const userFactory = user => ({
   lastName: user.lastName || '',
   email: user.email || '',
   photo: user.photoURL || '',
+  phoneNumber: user.phoneNumber || '',
+  socialMedia: {},
   roles: {},
 });
 

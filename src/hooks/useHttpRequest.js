@@ -36,7 +36,7 @@ function useHttpRequest(request, initialState = null) {
     return () => {
       cancel();
     };
-  }, []);
+  }, [cancel]);
 
   return { response, loading, error, send, cancel };
 }

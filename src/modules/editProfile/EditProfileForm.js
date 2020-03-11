@@ -1,14 +1,17 @@
 import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
+import { compose } from 'redux';
 
-import { Button, Form, Input, Tabs } from 'antd';
+import { Button, Form, Input, Tabs, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import SocialIcon from '../../components/SocialIcon';
 
-import { shallowEqual, useSelector } from 'react-redux';
 import { authUserSelector } from '../auth/authSelectors';
-import './EditProfileForm.scss';
+import { combineSocialMedia, filterUndefinedFields } from './helpers';
+import { useHttpRequest } from '../../hooks';
 import DB from '../../firebase/DB';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
+import './EditProfileForm.scss';
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -16,12 +19,32 @@ const { TextArea } = Input;
 const EditProfileForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
   const user = useSelector(authUserSelector, shallowEqual);
+  const updateUserRequest = useHttpRequest(DB.updateUser);
 
-  const onSubmit = event => {
+  const updateUser = async (uid, userData) => {
+    const key = 'updateUser';
+    try {
+      message.loading({ content: 'Saving in progress...', key });
+      await updateUserRequest.send(uid, userData);
+      message.success({ content: 'Profile has been updated!', key });
+    } catch (error) {
+      console.log(error);
+      message.error({ content: error.message, key });
+    }
+  };
+
+  const onSubmit = async event => {
     event.preventDefault();
+
+    if (updateUserRequest.loading) {
+      return;
+    }
+
     validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        const userDataToUpdate = compose(combineSocialMedia, filterUndefinedFields)(values);
+        updateUser(user.uid, userDataToUpdate);
       }
     });
   };
@@ -47,6 +70,7 @@ const EditProfileForm = props => {
           <Form.Item label="Country" className="EditProfileForm__form-item">
             {getFieldDecorator('country', {
               initialValue: user.country,
+              rules: VALIDATION_RULES.country,
             })(
               <Input
                 addonAfter={<Icon icon={['fas', 'globe-europe']} />}
@@ -59,6 +83,7 @@ const EditProfileForm = props => {
           <Form.Item label="City" className="EditProfileForm__form-item">
             {getFieldDecorator('city', {
               initialValue: user.city,
+              rules: VALIDATION_RULES.city,
             })(
               <Input
                 addonAfter={<Icon icon={['fas', 'map-marker-alt']} />}
@@ -69,13 +94,13 @@ const EditProfileForm = props => {
           </Form.Item>
 
           <Form.Item label="Phone" className="EditProfileForm__form-item">
-            {getFieldDecorator('phone', {
-              initialValue: user.phone,
+            {getFieldDecorator('phoneNumber', {
+              initialValue: user.phoneNumber,
             })(
               <Input
                 addonAfter={<Icon icon={['fas', 'phone']} />}
                 placeholder="+38 (099) 999 99 99"
-                name="phone"
+                name="phoneNumber"
               />,
             )}
           </Form.Item>
@@ -180,7 +205,7 @@ const EditProfileForm = props => {
       </Tabs>
 
       <Form.Item className="text-right mb-0">
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={updateUserRequest.loading}>
           Save
         </Button>
       </Form.Item>
