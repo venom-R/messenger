@@ -19,10 +19,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const authUserListener = dispatch(onAuthUserListener());
-    return () => {
-      authUserListener();
-    };
+    dispatch(onAuthUserListener());
   }, [dispatch]);
 
   return (

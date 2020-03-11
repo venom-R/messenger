@@ -18,7 +18,6 @@ const SignInForm = props => {
   const loginWithEmail = async (email, password) => {
     try {
       await loginWithEmailRequest.send(email, password);
-      props.history.push(ROUTES.HOME);
     } catch (error) {
       setFields(createFieldsErrors({ email, password }, error));
     }
