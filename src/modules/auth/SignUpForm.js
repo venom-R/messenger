@@ -16,6 +16,7 @@ const SignUpForm = props => {
   const signUp = async (firstName, lastName, email, password) => {
     try {
       await signUpRequest.send(firstName, lastName, email, password);
+      await Auth.sendEmailVerification();
       props.history.push(ROUTES.HOME);
     } catch (error) {
       setFields(createFieldsErrors({ firstName, lastName, email, password }, error));
