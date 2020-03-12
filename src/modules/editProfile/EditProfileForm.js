@@ -12,6 +12,7 @@ import { useHttpRequest } from '../../hooks';
 import DB from '../../firebase/DB';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import './EditProfileForm.scss';
+import Avatar from '../../components/Avatar';
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -52,7 +53,11 @@ const EditProfileForm = props => {
   return (
     <Form onSubmit={onSubmit} layout="vertical">
       <Tabs defaultActiveKey="1">
-        <TabPane tab="Personal" key="1" className="EditProfileForm__tab-item">
+        <TabPane tab="Main" key="1" className="EditProfileForm__tab-item">
+          <div className="text-center">
+            <Avatar alt="Roma Teleshyk" size="lg" />
+          </div>
+
           <Form.Item label="First name" className="EditProfileForm__form-item">
             {getFieldDecorator('firstName', {
               initialValue: user.firstName,
@@ -66,7 +71,9 @@ const EditProfileForm = props => {
               rules: VALIDATION_RULES.lastName,
             })(<Input addonAfter={<Icon icon={['fas', 'user']} />} name="lastName" />)}
           </Form.Item>
+        </TabPane>
 
+        <TabPane tab="Details" key="2" className="EditProfileForm__tab-item">
           <Form.Item label="Country" className="EditProfileForm__form-item">
             {getFieldDecorator('country', {
               initialValue: user.country,
@@ -116,9 +123,7 @@ const EditProfileForm = props => {
               />,
             )}
           </Form.Item>
-        </TabPane>
 
-        <TabPane tab="About" key="2" className="EditProfileForm__tab-item">
           <Form.Item
             label="Write a few words that describe you"
             className="EditProfileForm__form-item">
