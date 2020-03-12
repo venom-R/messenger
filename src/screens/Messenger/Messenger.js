@@ -10,6 +10,7 @@ import ProfileContainer from '../../modules/profile/ProfileContainer';
 import { visibilityProfileSelector } from '../../modules/profile/profileSelectors';
 
 import './Messenger.scss';
+import AvatarLoader from '../../modules/editProfile/AvatarLoader';
 
 const Messenger = props => {
   const isProfileVisible = useSelector(visibilityProfileSelector);
@@ -18,9 +19,10 @@ const Messenger = props => {
     <div className="Messenger">
       <Navigation />
       <div className="content">
-        <Sidebar />
-        <Chat />
-        {isProfileVisible && <ProfileContainer />}
+        {/*<Sidebar />*/}
+        {/*<Chat />*/}
+        {/*{isProfileVisible && <ProfileContainer />}*/}
+        <AvatarLoader />
       </div>
       <EditProfileModal />
     </div>
