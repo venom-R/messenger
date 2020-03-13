@@ -4,8 +4,12 @@ import { type } from '../utils/helpers';
 export default class DB {
   static users = db.collection('users');
 
-  static createUser(uid, user) {
-    return DB.updateUser(uid, user, false);
+  static async createUser(uid, user) {
+    const userByUid = await DB.getUser(uid);
+    if (!userByUid.exists) {
+      return DB.updateUser(uid, user, false);
+    }
+    return userByUid;
   }
 
   static getUser(uid) {
