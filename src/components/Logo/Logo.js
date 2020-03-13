@@ -1,12 +1,16 @@
-import React from "react";
-import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
-import "./Logo.scss";
+import React from 'react';
 
-const Logo = ({ classList = "" }) => {
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+
+import { HOME } from '../../constants/routes';
+import './Logo.scss';
+
+const Logo = ({ classList = '' }) => {
   return (
-    <a href="#" className={"Logo " + classList}>
-      <Icon icon={["far", "comment-dots"]} />
-    </a>
+    <Link to={HOME} className={'Logo ' + classList}>
+      <Icon icon={['far', 'comment-dots']} />
+    </Link>
   );
 };
 
