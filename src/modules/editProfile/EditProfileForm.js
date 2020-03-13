@@ -1,38 +1,46 @@
-import React from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { compose } from 'redux';
 
 import { Button, Form, Input, Tabs, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import SocialIcon from '../../components/SocialIcon';
+import Avatar from '../../components/Avatar';
+import AvatarUploader from './AvatarUploader';
 
 import { authUserSelector } from '../auth/authSelectors';
+import { updateAuthUserData } from '../auth/authSlice';
 import { combineSocialMedia, filterUndefinedFields } from './helpers';
 import { useHttpRequest } from '../../hooks';
 import DB from '../../firebase/DB';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import './EditProfileForm.scss';
-import Avatar from '../../components/Avatar';
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
+
+const messageKey = 'updateUser';
 
 const EditProfileForm = props => {
   const { getFieldDecorator, validateFields } = props.form;
   const user = useSelector(authUserSelector, shallowEqual);
   const updateUserRequest = useHttpRequest(DB.updateUser);
+  const dispatch = useDispatch();
 
-  const updateUser = async (uid, userData) => {
-    const key = 'updateUser';
-    try {
-      message.loading({ content: 'Saving in progress...', key });
-      await updateUserRequest.send(uid, userData);
-      message.success({ content: 'Profile has been updated!', key });
-    } catch (error) {
-      console.log(error);
-      message.error({ content: error.message, key });
-    }
-  };
+  const updateUser = useCallback(
+    async (uid, userData) => {
+      try {
+        message.loading({ content: 'Saving in progress...', key: messageKey });
+        await updateUserRequest.send(uid, userData);
+        dispatch(updateAuthUserData());
+        message.success({ content: 'Profile has been updated!', key: messageKey });
+      } catch (error) {
+        console.log(error);
+        message.error({ content: error.message, key: messageKey });
+      }
+    },
+    [updateUserRequest, dispatch],
+  );
 
   const onSubmit = async event => {
     event.preventDefault();
@@ -50,27 +58,47 @@ const EditProfileForm = props => {
     });
   };
 
+  const onAvatarUploadStateChanged = useCallback(
+    async getNextPhotoUrl => {
+      try {
+        message.loading({ content: 'Photo is uploading...', key: messageKey });
+        const nextPhotoUrl = await getNextPhotoUrl();
+        await updateUser(user.uid, { photo: nextPhotoUrl });
+        message.success({ content: 'Photo has been updated!', key: messageKey });
+      } catch (error) {
+        message.error({ content: error.message, key: messageKey });
+      }
+    },
+    [updateUser, user.uid],
+  );
+
   return (
     <Form onSubmit={onSubmit} layout="vertical">
       <Tabs defaultActiveKey="1">
         <TabPane tab="Main" key="1" className="EditProfileForm__tab-item">
-          <div className="text-center">
-            <Avatar alt="Roma Teleshyk" size="lg" />
+          <div className="d-flex">
+            <div style={{ width: '70%' }}>
+              <Form.Item label="First name" className="EditProfileForm__form-item">
+                {getFieldDecorator('firstName', {
+                  initialValue: user.firstName,
+                  rules: VALIDATION_RULES.firstName,
+                })(<Input addonAfter={<Icon icon={['fas', 'user']} />} name="firstName" />)}
+              </Form.Item>
+
+              <Form.Item label="Last name" className="EditProfileForm__form-item">
+                {getFieldDecorator('lastName', {
+                  initialValue: user.lastName,
+                  rules: VALIDATION_RULES.lastName,
+                })(<Input addonAfter={<Icon icon={['fas', 'user']} />} name="lastName" />)}
+              </Form.Item>
+            </div>
+
+            <div className="text-right" style={{ width: '30%', paddingTop: '7px' }}>
+              <AvatarUploader uid={user.uid} onStateChanged={onAvatarUploadStateChanged}>
+                <Avatar alt={`${user.firstName} ${user.lastName}`} size="lg" src={user.photo} />
+              </AvatarUploader>
+            </div>
           </div>
-
-          <Form.Item label="First name" className="EditProfileForm__form-item">
-            {getFieldDecorator('firstName', {
-              initialValue: user.firstName,
-              rules: VALIDATION_RULES.firstName,
-            })(<Input addonAfter={<Icon icon={['fas', 'user']} />} name="firstName" />)}
-          </Form.Item>
-
-          <Form.Item label="Last name" className="EditProfileForm__form-item">
-            {getFieldDecorator('lastName', {
-              initialValue: user.lastName,
-              rules: VALIDATION_RULES.lastName,
-            })(<Input addonAfter={<Icon icon={['fas', 'user']} />} name="lastName" />)}
-          </Form.Item>
         </TabPane>
 
         <TabPane tab="Details" key="2" className="EditProfileForm__tab-item">
@@ -123,7 +151,9 @@ const EditProfileForm = props => {
               />,
             )}
           </Form.Item>
+        </TabPane>
 
+        <TabPane tab="About" key="3" className="EditProfileForm__tab-item">
           <Form.Item
             label="Write a few words that describe you"
             className="EditProfileForm__form-item">
@@ -134,7 +164,7 @@ const EditProfileForm = props => {
           </Form.Item>
         </TabPane>
 
-        <TabPane tab="Social Links" key="3" className="EditProfileForm__tab-item">
+        <TabPane tab="Social Links" key="4" className="EditProfileForm__tab-item">
           <Form.Item className="EditProfileForm__form-item EditProfileForm__social-item">
             {getFieldDecorator('facebook', {
               initialValue: user.socialMedia.facebook,

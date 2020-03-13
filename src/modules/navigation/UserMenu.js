@@ -1,11 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import Avatar from '../../components/Avatar';
 
-import avatar from './temp-avatar.png';
-
-const UserMenu = ({ openEditProfileModal, openProfile, logout }) => {
+const UserMenu = ({ avatarUrl, openEditProfileModal, openProfile, logout }) => {
   const userMenu = (
     <Menu>
       <Menu.Item onClick={openEditProfileModal}>Edit profile</Menu.Item>
@@ -21,11 +20,18 @@ const UserMenu = ({ openEditProfileModal, openProfile, logout }) => {
     <Tooltip placement="right" title="User menu">
       <Dropdown overlay={userMenu} placement="topLeft" trigger={['click']}>
         <Button type="primary" shape="circle" className="Navigation__settings-btn">
-          <Avatar src={avatar} alt="Profile avatar" />
+          <Avatar src={avatarUrl} alt="Profile avatar" />
         </Button>
       </Dropdown>
     </Tooltip>
   );
+};
+
+UserMenu.propTypes = {
+  avatarUrl: PropTypes.string,
+  openEditProfileModal: PropTypes.func.isRequired,
+  openProfile: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 export default UserMenu;

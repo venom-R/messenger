@@ -1,4 +1,4 @@
-import { firebase, storage } from './core';
+import { storage } from './core';
 
 export default class Storage {
   static ref = storage.ref();

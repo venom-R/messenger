@@ -15,9 +15,11 @@ import { setTheme } from '../../App/appSlice';
 import { themeSelector } from '../../App/appSelectors';
 
 import './Navigation.scss';
+import { authUserSelector } from '../auth/authSelectors';
 
 const Navigation = () => {
   const theme = useSelector(themeSelector);
+  const authUser = useSelector(authUserSelector);
   const dispatch = useDispatch();
   const actions = bindActionCreators({ openEditProfileModal, openProfile, setTheme }, dispatch);
   const logout = () => Auth.signOut();
@@ -78,6 +80,7 @@ const Navigation = () => {
             openEditProfileModal={actions.openEditProfileModal}
             openProfile={actions.openProfile}
             logout={logout}
+            avatarUrl={authUser.photo}
           />
         </li>
       </ul>

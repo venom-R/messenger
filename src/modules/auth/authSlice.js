@@ -4,6 +4,7 @@ import DB from '../../firebase/DB';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('authUser')),
+  error: null,
 };
 
 const auth = createSlice({
@@ -13,10 +14,13 @@ const auth = createSlice({
     setAuthUser(state, action) {
       state.user = action.payload;
     },
+    setAuthError(state, action) {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setAuthUser } = auth.actions;
+export const { setAuthUser, setAuthError } = auth.actions;
 
 const authUserFactory = user => {
   if (user !== null) {
@@ -32,26 +36,40 @@ const authUserFactory = user => {
   return null;
 };
 
-export const onAuthUserListener = () => async dispatch => {
-  return Auth.onAuthUserListener(async user => {
-    let authUser = authUserFactory(user);
-
-    if (authUser) {
-      try {
-        const userDoc = await DB.getUser(authUser.uid);
-        if (userDoc.exists) {
-          authUser = { ...authUser, ...userDoc.data() };
-          localStorage.setItem('authUser', JSON.stringify(authUser));
-        } else {
-          console.error(`DB.getUser: user ${authUser.uid} is not found.`);
-        }
-      } catch (error) {}
-    } else {
-      localStorage.removeItem('authUser');
+const attachUserDataToAuthUser = authUser => async dispatch => {
+  if (authUser) {
+    try {
+      const userDoc = await DB.getUser(authUser.uid);
+      if (userDoc.exists) {
+        const userData = { ...authUserFactory(authUser), ...userDoc.data() };
+        dispatch(setAuthUser(userData));
+        localStorage.setItem('authUser', JSON.stringify(userData));
+      } else {
+        console.error(`DB.getUser: user ${authUser.uid} is not found.`);
+        dispatch(setAuthUser(authUser));
+      }
+    } catch (error) {
+      dispatch(setAuthError(error));
     }
+  } else {
+    localStorage.removeItem('authUser');
+    dispatch(setAuthUser(null));
+  }
+};
 
-    dispatch(setAuthUser(authUser));
+export const onAuthUserListener = () => dispatch => {
+  return Auth.onAuthUserListener(authUser => {
+    dispatch(attachUserDataToAuthUser(authUser));
   });
+};
+
+export const updateAuthUserData = () => async dispatch => {
+  try {
+    const authUser = await Auth.getAuthUser();
+    dispatch(attachUserDataToAuthUser(authUser));
+  } catch (error) {
+    dispatch(setAuthError(error));
+  }
 };
 
 export default auth.reducer;
