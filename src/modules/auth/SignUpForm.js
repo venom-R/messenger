@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { Button, Divider, Form, Input } from 'antd';
+import { Button, Divider, Form, Input, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 import Auth from '../../firebase/Auth';
 import { useHttpRequest } from '../../hooks';
-import { createFieldsErrors } from './helpers';
+import { getErrorMessage } from '../../utils/helpers';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
 
 const SignUpForm = props => {
-  const { getFieldDecorator, validateFields, setFields } = props.form;
+  const { getFieldDecorator, validateFields } = props.form;
   const signUpRequest = useHttpRequest(Auth.createUser);
 
   const signUp = async (firstName, lastName, email, password) => {
@@ -19,7 +19,7 @@ const SignUpForm = props => {
       await Auth.sendEmailVerification();
       props.history.push(ROUTES.HOME);
     } catch (error) {
-      setFields(createFieldsErrors({ firstName, lastName, email, password }, error));
+      message.error(getErrorMessage(error));
     }
   };
 

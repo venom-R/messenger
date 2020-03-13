@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
-import { Button, Divider, Form, Input } from 'antd';
+import { Button, Divider, Form, Input, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import ResetPasswordSuccess from './ResetPasswordSuccess';
 
 import Auth from '../../firebase/Auth';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
-import { createFieldsErrors } from './helpers';
 import { useHttpRequest } from '../../hooks';
+import { getErrorMessage } from '../../utils/helpers';
 
 const ResetPasswordForm = props => {
-  const { getFieldDecorator, validateFields, setFields } = props.form;
+  const { getFieldDecorator, validateFields } = props.form;
   const resetPasswordRequest = useHttpRequest(Auth.passwordReset);
   const [isSent, setIsSent] = useState(false);
 
@@ -20,7 +20,7 @@ const ResetPasswordForm = props => {
       await resetPasswordRequest.send(email);
       setIsSent(true);
     } catch (error) {
-      setFields(createFieldsErrors({ email }, error));
+      message.error(getErrorMessage(error));
     }
   };
 

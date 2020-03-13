@@ -7,19 +7,19 @@ import SocialIcon from '../../components/SocialIcon';
 
 import Auth from '../../firebase/Auth';
 import { useHttpRequest } from '../../hooks';
-import { createFieldsErrors, getErrorMessage } from './helpers';
+import { getErrorMessage } from '../../utils/helpers';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
 import * as ROUTES from '../../constants/routes';
 
 const SignInForm = props => {
-  const { getFieldDecorator, validateFields, setFields } = props.form;
+  const { getFieldDecorator, validateFields } = props.form;
   const loginWithEmailRequest = useHttpRequest(Auth.signIn);
 
   const loginWithEmail = async (email, password) => {
     try {
       await loginWithEmailRequest.send(email, password);
     } catch (error) {
-      setFields(createFieldsErrors({ email, password }, error));
+      message.error(getErrorMessage(error));
     }
   };
 
