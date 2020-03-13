@@ -81,6 +81,7 @@ const Navigation = () => {
             openProfile={actions.openProfile}
             logout={logout}
             avatarUrl={authUser.photo}
+            userFullName={`${authUser.firstName} ${authUser.lastName}`}
           />
         </li>
       </ul>
