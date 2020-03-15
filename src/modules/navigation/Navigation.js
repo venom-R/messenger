@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import Logo from '../../components/Logo';
@@ -19,7 +19,7 @@ import { authUserSelector } from '../auth/authSelectors';
 
 const Navigation = () => {
   const theme = useSelector(themeSelector);
-  const authUser = useSelector(authUserSelector);
+  const authUser = useSelector(authUserSelector, shallowEqual);
   const dispatch = useDispatch();
   const actions = bindActionCreators({ openEditProfileModal, openProfile, setTheme }, dispatch);
   const logout = () => Auth.signOut();
@@ -78,7 +78,7 @@ const Navigation = () => {
         <li className="Navigation__group-item">
           <UserMenu
             openEditProfileModal={actions.openEditProfileModal}
-            openProfile={actions.openProfile}
+            openProfile={() => actions.openProfile(authUser.uid)}
             logout={logout}
             avatarUrl={authUser.photo}
             userFullName={`${authUser.firstName} ${authUser.lastName}`}

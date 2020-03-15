@@ -5,7 +5,7 @@ import './MessageList.scss';
 const authUser = {
   id: 0,
   fullName: 'Roma Teleshyk',
-  avatar: '/static/media/temp-avatar.927f61d8.png',
+  avatar: null,
 };
 
 const messages = [

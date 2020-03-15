@@ -17,5 +17,5 @@ export const VALIDATION_RULES = {
   ],
   country: [{ max: 50, message: 'Country should contain up to 50 characters!' }],
   city: [{ max: 50, message: 'City should contain up to 50 characters!' }],
-  description: [{ max: 120, message: 'Description should contain up to 120 characters!' }],
+  description: [{ max: 240, message: 'Description should contain up to 120 characters!' }],
 };

@@ -1,28 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Button, Dropdown, Menu } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import UserCard from '../UserCard';
 
-const chatHeaderMenu = (
-  <Menu>
-    <Menu.Item>
-      <a href="http://www.alipay.com/">Profile</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a href="http://www.tmall.com/">Add to archive</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a href="http://www.tmall.com/">Delete</a>
-    </Menu.Item>
-    <Menu.Item>
-      <a href="http://www.tmall.com/" className="text_danger">
-        Block
-      </a>
-    </Menu.Item>
-  </Menu>
-);
+const ChatHeader = ({ partner, actions }) => {
+  const { openProfile } = actions;
+  const chatHeaderMenu = (
+    <Menu>
+      <Menu.Item onClick={() => openProfile(partner.uid)}>Profile</Menu.Item>
+      <Menu.Item>Add to archive</Menu.Item>
+      <Menu.Item>Delete</Menu.Item>
+      <Menu.Item>
+        <span className="text_danger">Block</span>
+      </Menu.Item>
+    </Menu>
+  );
 
-const ChatHeader = ({ partner }) => {
   return (
     <header className="ChatHeader">
       <UserCard user={partner} />
@@ -33,6 +28,13 @@ const ChatHeader = ({ partner }) => {
       </Dropdown>
     </header>
   );
+};
+
+ChatHeader.propTypes = {
+  partner: PropTypes.object.isRequired,
+  actions: PropTypes.shape({
+    openProfile: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default ChatHeader;

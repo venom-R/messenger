@@ -5,9 +5,19 @@
   flex-direction: column;
   overflow: hidden;
 
+  &__loading,
   &__inner {
     flex: 1;
     padding: 25px 30px 0;
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__inner {
     overflow: auto;
   }
 
