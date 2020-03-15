@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Button } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
@@ -11,6 +13,10 @@ const ProfileHeader = ({ onClose }) => {
       </Button>
     </header>
   );
+};
+
+ProfileHeader.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
 
 export default ProfileHeader;

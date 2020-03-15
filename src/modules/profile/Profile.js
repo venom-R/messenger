@@ -6,6 +6,7 @@ import ProfileLoading from './ProfileLoading';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
 
+import { errorType, profileUserDataType } from '../../types';
 import './Profile.scss';
 
 const Profile = ({ userData, loading, error, onClose }) => {
@@ -30,8 +31,8 @@ const ProfileError = () => (
 
 Profile.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.object,
-  userData: PropTypes.object.isRequired,
+  error: errorType,
+  userData: profileUserDataType.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

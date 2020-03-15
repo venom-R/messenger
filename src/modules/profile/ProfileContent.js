@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 
 import Avatar from '../../components/Avatar';
 import SocialMediaList from '../../components/SocialMediaList';
 import ProfileSection from './ProfileSection';
+import { profileUserDataType } from '../../types';
 
 const CitySection = ({ country, city }) => {
   const title = city ? 'City' : 'Country';
@@ -46,22 +46,7 @@ const ProfileContent = ({ userData }) => {
 };
 
 ProfileContent.propTypes = {
-  userData: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    photo: PropTypes.string,
-    description: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    country: PropTypes.string,
-    city: PropTypes.string,
-    website: PropTypes.string,
-    socialMedia: PropTypes.object,
-  }).isRequired,
-};
-
-CitySection.propTypes = {
-  country: PropTypes.string,
-  city: PropTypes.string,
+  userData: profileUserDataType.isRequired,
 };
 
 export default ProfileContent;

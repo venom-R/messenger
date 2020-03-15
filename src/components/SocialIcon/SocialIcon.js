@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
@@ -28,4 +29,11 @@ const SocialIcon = ({ brand, round = true, xs = false }) => {
     </span>
   );
 };
+
+SocialIcon.propTypes = {
+  brand: PropTypes.string.isRequired,
+  round: PropTypes.bool,
+  xs: PropTypes.bool,
+};
+
 export default SocialIcon;

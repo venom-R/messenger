@@ -1,6 +1,10 @@
 import React from 'react';
+
 import SocialIcon from '../SocialIcon';
+
 import { SOCIAL_MEDIA_LINKS } from '../../constants/socialMediaLinks';
+import { socialMediaType } from '../../types';
+
 import './SocialMediaList.scss';
 
 const SocialMediaList = ({ list }) => {
@@ -10,6 +14,7 @@ const SocialMediaList = ({ list }) => {
           if (list[key] !== '') {
             return { name: key, href: SOCIAL_MEDIA_LINKS[key] + list[key] };
           }
+          return null;
         })
         .filter(Boolean)
     : null;
@@ -24,6 +29,10 @@ const SocialMediaList = ({ list }) => {
       ))}
     </ul>
   );
+};
+
+SocialMediaList.propTypes = {
+  list: socialMediaType.isRequired,
 };
 
 export default SocialMediaList;
