@@ -5,6 +5,12 @@ import Avatar from '../../components/Avatar';
 import SocialMediaList from '../../components/SocialMediaList';
 import ProfileSection from './ProfileSection';
 
+const CitySection = ({ country, city }) => {
+  const title = city ? 'City' : 'Country';
+  const text = city && country ? `${country} / ${city}` : city ? city : country;
+  return <ProfileSection title={title} text={text} />;
+};
+
 const ProfileContent = ({ userData }) => {
   const fullName = `${userData.firstName} ${userData.lastName}`;
 
@@ -19,9 +25,8 @@ const ProfileContent = ({ userData }) => {
       <div className="Profile__details">
         {userData.description && <p className="Profile__text">{userData.description}</p>}
         {userData.phoneNumber && <ProfileSection title="Phone" text={userData.phoneNumber} />}
-        {/*TODO fix this*/}
-        {userData.country && userData.city && (
-          <ProfileSection title="City" text={`${userData.country} / ${userData.city}`} />
+        {(userData.country || userData.city) && (
+          <CitySection city={userData.city} country={userData.country} />
         )}
         {userData.website && (
           <ProfileSection title="Website">
@@ -41,7 +46,22 @@ const ProfileContent = ({ userData }) => {
 };
 
 ProfileContent.propTypes = {
-  userData: PropTypes.object.isRequired,
+  userData: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    photo: PropTypes.string,
+    description: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    country: PropTypes.string,
+    city: PropTypes.string,
+    website: PropTypes.string,
+    socialMedia: PropTypes.object,
+  }).isRequired,
+};
+
+CitySection.propTypes = {
+  country: PropTypes.string,
+  city: PropTypes.string,
 };
 
 export default ProfileContent;
