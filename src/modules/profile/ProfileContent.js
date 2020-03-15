@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Avatar from '../../components/Avatar';
 import SocialMediaList from '../../components/SocialMediaList';
+import ProfileSection from './ProfileSection';
 
 const ProfileContent = ({ userData }) => {
   const fullName = `${userData.firstName} ${userData.lastName}`;
@@ -17,36 +18,22 @@ const ProfileContent = ({ userData }) => {
       </figure>
       <div className="Profile__details">
         {userData.description && <p className="Profile__text">{userData.description}</p>}
-        {userData.phoneNumber && (
-          <section className="py-2">
-            <h4 className="Profile__sub-title">Phone</h4>
-            <p className="Profile__text">{userData.phoneNumber}</p>
-          </section>
-        )}
+        {userData.phoneNumber && <ProfileSection title="Phone" text={userData.phoneNumber} />}
         {/*TODO fix this*/}
         {userData.country && userData.city && (
-          <section className="py-2">
-            <h4 className="Profile__sub-title">City</h4>
-            <p className="Profile__text">
-              {userData.country} / {userData.city}
-            </p>
-          </section>
+          <ProfileSection title="City" text={`${userData.country} / ${userData.city}`} />
         )}
         {userData.website && (
-          <section className="py-2">
-            <h4 className="Profile__sub-title">Website</h4>
-            <p className="Profile__text">
-              <a href={userData.website} target="_blank" rel="noopener noreferrer">
-                {userData.website}
-              </a>
-            </p>
-          </section>
+          <ProfileSection title="Website">
+            <a href={userData.website} target="_blank" rel="noopener noreferrer">
+              {userData.website}
+            </a>
+          </ProfileSection>
         )}
         {userData.socialMedia && Object.keys(userData.socialMedia).length > 0 && (
-          <section className="py-2">
-            <h4 className="Profile__sub-title">Social media accounts</h4>
+          <ProfileSection title="Social media accounts">
             <SocialMediaList list={userData.socialMedia} />
-          </section>
+          </ProfileSection>
         )}
       </div>
     </Fragment>

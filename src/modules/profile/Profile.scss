@@ -33,6 +33,14 @@
     text-align: center;
   }
 
+  &__section {
+    padding: 10px 0;
+
+    .Profile__text {
+      margin: 0;
+    }
+  }
+
   &__main-title {
     font-size: 23px;
     margin-bottom: 0;
