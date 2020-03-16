@@ -3,13 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Divider, Form, Input, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import SocialIcon from '../../components/SocialIcon';
+import SocialIcon from '../../../components/SocialIcon';
 
-import Auth from '../../firebase/Auth';
-import { useHttpRequest } from '../../hooks';
-import { getErrorMessage } from '../../utils/helpers';
-import { VALIDATION_RULES } from '../../constants/validationsRules';
-import * as ROUTES from '../../constants/routes';
+import Auth from '../../../firebase/Auth';
+import { useHttpRequest } from '../../../hooks';
+import { getErrorMessage } from '../../../utils/helpers';
+import { VALIDATION_RULES } from '../../../constants/validationsRules';
+import * as ROUTES from '../../../constants/routes';
 
 const SignInForm = props => {
   const { getFieldDecorator, validateFields } = props.form;

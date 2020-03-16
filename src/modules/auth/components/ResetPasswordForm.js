@@ -4,11 +4,11 @@ import { Button, Divider, Form, Input, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import ResetPasswordSuccess from './ResetPasswordSuccess';
 
-import Auth from '../../firebase/Auth';
-import { VALIDATION_RULES } from '../../constants/validationsRules';
-import * as ROUTES from '../../constants/routes';
-import { useHttpRequest } from '../../hooks';
-import { getErrorMessage } from '../../utils/helpers';
+import Auth from '../../../firebase/Auth';
+import { VALIDATION_RULES } from '../../../constants/validationsRules';
+import * as ROUTES from '../../../constants/routes';
+import { useHttpRequest } from '../../../hooks';
+import { getErrorMessage } from '../../../utils/helpers';
 
 const ResetPasswordForm = props => {
   const { getFieldDecorator, validateFields } = props.form;

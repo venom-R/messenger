@@ -20,6 +20,7 @@ const profile = createSlice({
     closeProfile(state) {
       state.isVisible = false;
       state.uid = null;
+      state.error = null;
     },
     fetchProfileDataRequest(state) {
       state.loading = true;

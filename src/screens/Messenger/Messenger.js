@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import Navigation from '../../modules/navigation/Navigation';
 import Sidebar from '../../components/Sidebar';
 import Chat from '../../components/Chat';
-import EditProfileModal from '../../modules/editProfile/EditProfileModal';
-import ProfileContainer from '../../modules/profile/ProfileContainer';
+import EditProfileModal from '../../modules/editProfile/components/EditProfileModal';
+import ProfileContainer from '../../modules/profile/components/ProfileContainer';
 
 import { visibilityProfileSelector } from '../../modules/profile/profileSelectors';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Upload, message } from 'antd';
-import Storage from '../../firebase/Storage';
+import Storage from '../../../firebase/Storage';
 
 import './AvatarUploader.scss';
 

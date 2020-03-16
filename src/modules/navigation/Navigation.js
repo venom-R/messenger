@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import Logo from '../../components/Logo';
+import Logo from './Logo';
 import NavigationItem from './NavigationItem';
 import ThemeSwitcher from './ThemeSwitcher';
 import UserMenu from './UserMenu';

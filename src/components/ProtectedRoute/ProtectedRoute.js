@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import EmailNotVerified from '../../modules/auth/EmailNotVerified';
+import EmailNotVerified from '../../modules/auth/components/EmailNotVerified';
 
 import { authUserSelector } from '../../modules/auth/authSelectors';
 import * as ROUTES from '../../constants/routes';

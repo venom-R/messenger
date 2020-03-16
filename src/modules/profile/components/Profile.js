@@ -6,7 +6,7 @@ import ProfileLoading from './ProfileLoading';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
 
-import { errorType, profileUserDataType } from '../../types';
+import { errorType, profileUserDataType } from '../../../types';
 import './Profile.scss';
 
 const Profile = ({ userData, loading, error, onClose }) => {

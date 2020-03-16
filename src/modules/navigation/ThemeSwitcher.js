@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Button, Tooltip } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 import { THEMES } from '../../constants/themes';
+import { themeType } from '../../types';
 
 const { LIGHT, DARK } = THEMES;
 
@@ -17,6 +19,11 @@ const ThemeSwitcher = ({ theme, setTheme }) => {
       </Button>
     </Tooltip>
   );
+};
+
+ThemeSwitcher.propTypes = {
+  theme: themeType.isRequired,
+  setTheme: PropTypes.func.isRequired,
 };
 
 export default ThemeSwitcher;

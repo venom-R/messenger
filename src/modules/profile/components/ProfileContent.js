@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 
-import Avatar from '../../components/Avatar';
-import SocialMediaList from '../../components/SocialMediaList';
+import Avatar from '../../../components/Avatar';
+import SocialMediaList from './SocialMediaList';
 import ProfileSection from './ProfileSection';
-import { profileUserDataType } from '../../types';
+import { profileUserDataType } from '../../../types';
 
 const CitySection = ({ country, city }) => {
   const title = city ? 'City' : 'Country';

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 
 import Profile from './Profile';
 
-import { profileSelector } from './profileSelectors';
-import { authUserSelector } from '../auth/authSelectors';
-import { closeProfile, fetchProfileData } from './profileSlice';
+import { profileSelector } from '../profileSelectors';
+import { authUserSelector } from '../../auth/authSelectors';
+import { closeProfile, fetchProfileData } from '../profileSlice';
 
 const ProfileContainer = () => {
   const authUser = useSelector(authUserSelector, shallowEqual);

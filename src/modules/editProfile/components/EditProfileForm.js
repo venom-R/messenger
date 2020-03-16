@@ -4,16 +4,16 @@ import { compose } from 'redux';
 
 import { Button, Form, Input, Tabs, message } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import SocialIcon from '../../components/SocialIcon';
-import Avatar from '../../components/Avatar';
+import SocialIcon from '../../../components/SocialIcon';
+import Avatar from '../../../components/Avatar';
 import AvatarUploader from './AvatarUploader';
 
-import { authUserSelector } from '../auth/authSelectors';
-import { updateAuthUserData } from '../auth/authSlice';
-import { combineSocialMedia, filterUndefinedFields } from './helpers';
-import { useHttpRequest } from '../../hooks';
-import DB from '../../firebase/DB';
-import { VALIDATION_RULES } from '../../constants/validationsRules';
+import { authUserSelector } from '../../auth/authSelectors';
+import { updateAuthUserData } from '../../auth/authSlice';
+import { combineSocialMedia, filterUndefinedFields } from '../helpers';
+import { useHttpRequest } from '../../../hooks';
+import DB from '../../../firebase/DB';
+import { VALIDATION_RULES } from '../../../constants/validationsRules';
 
 import './EditProfileForm.scss';
 

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+
 import { Button, Divider } from 'antd';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import Auth from '../../firebase/Auth';
+
+import Auth from '../../../firebase/Auth';
 
 const EmailNotVerified = () => {
   const [isSent, setIsState] = useState(false);

@@ -1,5 +1,7 @@
-import { shape, string } from 'prop-types';
+import { shape, string, oneOf } from 'prop-types';
+
 import { SOCIAL_MEDIA_LINKS } from './constants/socialMediaLinks';
+import { THEMES } from "./constants/themes";
 
 export const errorType = shape({
   code: string,
@@ -26,3 +28,5 @@ export const profileUserDataType = shape({
   website: string,
   socialMedia: socialMediaType,
 });
+
+export const themeType = oneOf([THEMES.LIGHT, THEMES.DARK]);

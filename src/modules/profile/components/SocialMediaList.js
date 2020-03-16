@@ -1,9 +1,9 @@
 import React from 'react';
 
-import SocialIcon from '../SocialIcon';
+import SocialIcon from '../../../components/SocialIcon';
 
-import { SOCIAL_MEDIA_LINKS } from '../../constants/socialMediaLinks';
-import { socialMediaType } from '../../types';
+import { SOCIAL_MEDIA_LINKS } from '../../../constants/socialMediaLinks';
+import { socialMediaType } from '../../../types';
 
 import './SocialMediaList.scss';
 
