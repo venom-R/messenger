@@ -1,0 +1,13 @@
+.AvatarUploader {
+  width: auto;
+
+  .ant-upload.ant-upload-select-picture-card {
+    margin: 0;
+    width: 116px;
+    height: 116px;
+  }
+
+  .ant-upload {
+    display: flex;
+  }
+}

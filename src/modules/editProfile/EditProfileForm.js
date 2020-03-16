@@ -14,6 +14,7 @@ import { combineSocialMedia, filterUndefinedFields } from './helpers';
 import { useHttpRequest } from '../../hooks';
 import DB from '../../firebase/DB';
 import { VALIDATION_RULES } from '../../constants/validationsRules';
+
 import './EditProfileForm.scss';
 
 const { TabPane } = Tabs;
@@ -77,7 +78,7 @@ const EditProfileForm = props => {
       <Tabs defaultActiveKey="1">
         <TabPane tab="Main" key="1" className="EditProfileForm__tab-item">
           <div className="d-flex">
-            <div style={{ width: '70%' }}>
+            <div className="EditProfileForm__col70">
               <Form.Item label="First name" className="EditProfileForm__form-item">
                 {getFieldDecorator('firstName', {
                   initialValue: user.firstName,
@@ -93,9 +94,14 @@ const EditProfileForm = props => {
               </Form.Item>
             </div>
 
-            <div className="text-right" style={{ width: '30%', paddingTop: '7px' }}>
-              <AvatarUploader uid={user.uid} onStateChanged={onAvatarUploadStateChanged}>
-                <Avatar alt={`${user.firstName} ${user.lastName}`} size="lg" src={user.photo} />
+            <div className="EditProfileForm__avatar-uploader">
+              <AvatarUploader fileName={user.uid} onStateChanged={onAvatarUploadStateChanged}>
+                <Avatar
+                  src={user.photo}
+                  alt={`${user.firstName} ${user.lastName}`}
+                  round={false}
+                  size="lg"
+                />
               </AvatarUploader>
             </div>
           </div>

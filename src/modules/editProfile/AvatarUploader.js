@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Upload, message } from 'antd';
 import Storage from '../../firebase/Storage';
+
+import './AvatarUploader.scss';
 
 const metadata = {
   contentType: 'image/jpeg',
@@ -19,10 +22,10 @@ function beforeUpload(file) {
   return isJpg && isLt2M;
 }
 
-const AvatarUploader = ({ uid, children, onStateChanged = f => f }) => {
+const AvatarUploader = ({ fileName, children, onStateChanged = f => f }) => {
   const customRequest = ({ file }) => {
-    const fileName = uid ? `${uid}.jpg` : file.name;
-    const uploadTask = Storage.avatarsRef.child(fileName).put(file, metadata);
+    const name = fileName ? `${fileName}.jpg` : file.name;
+    const uploadTask = Storage.avatarsRef.child(name).put(file, metadata);
 
     const getNextPhotoUrl = new Promise((resolve, reject) => {
       uploadTask.on(
@@ -47,6 +50,7 @@ const AvatarUploader = ({ uid, children, onStateChanged = f => f }) => {
 
   return (
     <Upload
+      className="AvatarUploader"
       name="avatar"
       listType="picture-card"
       showUploadList={false}
@@ -58,7 +62,7 @@ const AvatarUploader = ({ uid, children, onStateChanged = f => f }) => {
 };
 
 AvatarUploader.propTypes = {
-  uid: PropTypes.string.isRequired,
+  fileName: PropTypes.string,
   onStateChanged: PropTypes.func,
 };
 

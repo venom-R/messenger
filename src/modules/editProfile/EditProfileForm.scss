@@ -13,4 +13,14 @@
       overflow: hidden;
     }
   }
+
+  &__col70 {
+    width: 70%;
+  }
+
+  &__avatar-uploader {
+    flex: 1 0 auto;
+    text-align: right;
+    padding-top: 23px;
+  }
 }
