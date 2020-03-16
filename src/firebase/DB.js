@@ -5,11 +5,7 @@ export default class DB {
   static users = db.collection('users');
 
   static async createUser(uid, user) {
-    const userByUid = await DB.getUser(uid);
-    if (!userByUid.exists) {
-      return DB.updateUser(uid, user, false);
-    }
-    return userByUid;
+    return DB.updateUser(uid, user, false);
   }
 
   static getUser(uid) {

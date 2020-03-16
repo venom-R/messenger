@@ -39,14 +39,16 @@ const authUserFactory = user => {
 const attachUserDataToAuthUser = authUser => async dispatch => {
   if (authUser) {
     try {
-      const userDoc = await DB.getUser(authUser.uid);
+      const user = authUserFactory(authUser);
+      const userDoc = await DB.getUser(user.uid);
+
       if (userDoc.exists) {
-        const userData = { ...authUserFactory(authUser), ...userDoc.data() };
+        const userData = { ...user, ...userDoc.data() };
         dispatch(setAuthUser(userData));
         localStorage.setItem('authUser', JSON.stringify(userData));
       } else {
-        console.error(`DB.getUser: user ${authUser.uid} is not found.`);
-        dispatch(setAuthUser(authUser));
+        console.error(`DB.getUser: user ${user.uid} is not found.`);
+        dispatch(setAuthUser(user));
       }
     } catch (error) {
       dispatch(setAuthError(error));

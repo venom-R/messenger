@@ -32,16 +32,21 @@ export default class Auth {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
+  static async signInWithProvider(provider) {
+    const authUser = await auth.signInWithPopup(provider);
+    if (authUser.additionalUserInfo.isNewUser) {
+      const newUserData = userFactory(authUser.user);
+      return DB.createUser(authUser.user.uid, newUserData);
+    }
+    return authUser;
+  }
+
   static async signInWithGoogle() {
-    const authUser = await auth.signInWithPopup(googleProvider);
-    const newUserData = userFactory(authUser.user);
-    return DB.createUser(authUser.user.uid, newUserData);
+    return Auth.signInWithProvider(googleProvider);
   }
 
   static async signInWithGithub() {
-    const authUser = await auth.signInWithPopup(githubProvider);
-    const newUserData = userFactory(authUser.user);
-    return DB.createUser(authUser.user.uid, newUserData);
+    return Auth.signInWithProvider(githubProvider);
   }
 
   static signOut() {
