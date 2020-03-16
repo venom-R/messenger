@@ -4,21 +4,10 @@ import DB from './DB';
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const githubProvider = new firebase.auth.GithubAuthProvider();
 
-const userFactory = user => ({
-  firstName: user.firstName || user.displayName || '',
-  lastName: user.lastName || '',
-  email: user.email || '',
-  photo: user.photoURL || '',
-  phoneNumber: user.phoneNumber || '',
-  socialMedia: {},
-  roles: {},
-});
-
 export default class Auth {
   static async createUser(firstName, lastName, email, password) {
-    const newUserData = userFactory({ firstName, lastName, email });
     const authUser = await auth.createUserWithEmailAndPassword(email, password);
-    await DB.createUser(authUser.user.uid, newUserData);
+    await DB.createUser(authUser.user.uid, { firstName, lastName, email });
     return authUser;
   }
 
@@ -35,8 +24,7 @@ export default class Auth {
   static async signInWithProvider(provider) {
     const authUser = await auth.signInWithPopup(provider);
     if (authUser.additionalUserInfo.isNewUser) {
-      const newUserData = userFactory(authUser.user);
-      return DB.createUser(authUser.user.uid, newUserData);
+      return DB.createUser(authUser.user.uid, authUser.user);
     }
     return authUser;
   }
