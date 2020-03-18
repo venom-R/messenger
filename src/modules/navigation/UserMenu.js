@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import Avatar from '../../components/Avatar';
 
+import './UserMenu.scss';
+
 const UserMenu = ({ avatarUrl, userFullName, openEditProfileModal, openProfile, logout }) => {
   const userMenu = (
     <Menu>
@@ -19,7 +21,7 @@ const UserMenu = ({ avatarUrl, userFullName, openEditProfileModal, openProfile, 
   return (
     <Tooltip placement="right" title="User menu">
       <Dropdown overlay={userMenu} placement="topLeft" trigger={['click']}>
-        <Button type="primary" shape="circle" className="Navigation__settings-btn">
+        <Button type="primary" shape="circle" className="UserMenu">
           <Avatar src={avatarUrl} alt={userFullName} />
         </Button>
       </Dropdown>
