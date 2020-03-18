@@ -3,6 +3,8 @@ import { THEMES } from '../constants/themes';
 
 const initialState = {
   theme: THEMES.LIGHT,
+  loading: false,
+  error: null,
 };
 
 const app = createSlice({
@@ -12,9 +14,18 @@ const app = createSlice({
     setTheme(state, action) {
       state.theme = action.payload;
     },
+    startLoading(state) {
+      state.loading = true;
+    },
+    finishLoading(state) {
+      state.loading = false;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setTheme } = app.actions;
+export const { setTheme, startLoading, finishLoading, setError } = app.actions;
 
 export default app.reducer;
