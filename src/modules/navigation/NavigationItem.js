@@ -1,20 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+import { Link } from 'react-router-dom';
 import { Badge, Tooltip } from 'antd';
 
-const NavigationItem = ({ link, isVisibleBadge, badgeStatus, tooltipTitle, children }) => {
+import { badgeStatusType } from '../../types';
+
+const NavigationItem = ({ to, hasBadge, badgeStatus, tooltipTitle, children }) => {
   const badgeClassNames = classNames('Navigation__badge-container', {
-    'Navigation__badge-container_hidden': !isVisibleBadge,
+    'Navigation__badge-container_hidden': !hasBadge,
   });
   return (
     <Tooltip placement="right" title={tooltipTitle}>
-      <a href={link} className="Navigation__link">
+      <Link to={to} className="Navigation__link">
         <Badge status={badgeStatus} className={badgeClassNames}>
           {children}
         </Badge>
-      </a>
+      </Link>
     </Tooltip>
   );
+};
+
+NavigationItem.propTypes = {
+  to: PropTypes.string.isRequired,
+  hasBadge: PropTypes.bool,
+  badgeStatus: badgeStatusType,
+  tooltipTitle: PropTypes.string,
 };
 
 export default NavigationItem;

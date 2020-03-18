@@ -1,7 +1,7 @@
 import { shape, string, oneOf } from 'prop-types';
 
 import { SOCIAL_MEDIA_LINKS } from './constants/socialMediaLinks';
-import { THEMES } from "./constants/themes";
+import { THEMES } from './constants/themes';
 
 export const errorType = shape({
   code: string,
@@ -30,3 +30,5 @@ export const profileUserDataType = shape({
 });
 
 export const themeType = oneOf([THEMES.LIGHT, THEMES.DARK]);
+
+export const badgeStatusType = oneOf(['success', 'processing', 'default', 'error', 'warning']);

@@ -28,7 +28,7 @@ const ProtectedRoute = ({ component: Component, permit, redirectPath = ROUTES.HO
 ProtectedRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
   permit: PropTypes.func.isRequired,
-  path: PropTypes.string,
+  path: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   redirectPath: PropTypes.string,
   exact: PropTypes.bool,
 };
