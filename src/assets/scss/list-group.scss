@@ -14,7 +14,6 @@
 }
 
 .list-group-item {
-
   &__avatar {
     padding-top: 5px;
     margin-right: 15px;
@@ -58,12 +57,13 @@
   &__dropdown {
     padding: 0;
     opacity: 0;
+    height: 17px;
   }
 
   &:hover {
     cursor: pointer;
 
-    .ListGroupItem__dropdown {
+    .list-group-item__dropdown {
       opacity: 1;
     }
   }
@@ -71,7 +71,7 @@
   &_active {
     background: var(--secondary--bg-color);
 
-    .ListGroupItem__content {
+    .list-group-item__content {
       font-weight: 600;
     }
   }

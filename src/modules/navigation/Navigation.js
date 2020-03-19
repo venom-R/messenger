@@ -13,9 +13,10 @@ import { openEditProfileModal } from '../editProfile/editProfileSlice';
 import { openProfile } from '../profile/profileSlice';
 import { setTheme } from '../../App/appSlice';
 import { themeSelector } from '../../App/appSelectors';
+import { authUserSelector } from '../auth/authSelectors';
+import * as ROUTES from '../../constants/routes';
 
 import './Navigation.scss';
-import { authUserSelector } from '../auth/authSelectors';
 
 const Navigation = () => {
   const theme = useSelector(themeSelector);
@@ -31,8 +32,8 @@ const Navigation = () => {
       <ul className="Navigation__links-group">
         <li className="Navigation__group-item">
           <NavigationItem
-            link="#chats"
-            isVisibleBadge={true}
+            to={ROUTES.HOME}
+            hasBadge={true}
             badgeStatus="warning"
             tooltipTitle="Chats">
             <Icon icon={['far', 'comment']} />
@@ -41,8 +42,8 @@ const Navigation = () => {
 
         <li className="Navigation__group-item">
           <NavigationItem
-            link="#friends"
-            isVisibleBadge={true}
+            to={ROUTES.FRIENDS}
+            hasBadge={true}
             badgeStatus="error"
             tooltipTitle="Friends">
             <Icon icon={['far', 'user']} />
@@ -51,8 +52,8 @@ const Navigation = () => {
 
         <li className="Navigation__group-item">
           <NavigationItem
-            link="#favorites"
-            isVisibleBadge={false}
+            to={ROUTES.FAVORITES}
+            hasBadge={false}
             badgeStatus="success"
             tooltipTitle="Favorites">
             <Icon icon={['far', 'star']} />
@@ -61,8 +62,8 @@ const Navigation = () => {
 
         <li className="Navigation__group-item">
           <NavigationItem
-            link="#archived"
-            isVisibleBadge={false}
+            to={ROUTES.ARCHIVED}
+            hasBadge={false}
             badgeStatus="default"
             tooltipTitle="Archived">
             <Icon icon={['fas', 'archive']} />

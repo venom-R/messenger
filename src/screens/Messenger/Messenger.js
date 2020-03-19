@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import Navigation from '../../modules/navigation/Navigation';
-import Sidebar from '../../components/Sidebar';
+import Sidebar from '../../modules/sidebar/Sidebar';
 import Chat from '../../components/Chat';
 import EditProfileModal from '../../modules/editProfile/components/EditProfileModal';
 import ProfileContainer from '../../modules/profile/components/ProfileContainer';

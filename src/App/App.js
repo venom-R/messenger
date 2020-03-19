@@ -44,7 +44,7 @@ const App = () => {
           redirectPath={ROUTES.HOME}
         />
         <ProtectedRoute
-          path={ROUTES.HOME}
+          path={[ROUTES.HOME, ROUTES.FRIENDS, ROUTES.FAVORITES, ROUTES.ARCHIVED]}
           component={Messenger}
           permit={isAuthenticated => isAuthenticated}
           redirectPath={ROUTES.SIGN_IN}

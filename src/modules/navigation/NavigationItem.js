@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Badge, Tooltip } from 'antd';
 
 import { badgeStatusType } from '../../types';
@@ -13,11 +13,11 @@ const NavigationItem = ({ to, hasBadge, badgeStatus, tooltipTitle, children }) =
   });
   return (
     <Tooltip placement="right" title={tooltipTitle}>
-      <Link to={to} className="Navigation__link">
+      <NavLink to={to} className="Navigation__link" activeClassName="Navigation__link_active" exact>
         <Badge status={badgeStatus} className={badgeClassNames}>
           {children}
         </Badge>
-      </Link>
+      </NavLink>
     </Tooltip>
   );
 };
